@@ -1,19 +1,18 @@
-<h1 >this is child component</h1>
+<h1>this is child component</h1>
 <!-- json-server --watch db.json // command for fake api run -->
-<h2 class="content-block" style="text-align: center">Home {{value}} </h2>
+<h2 class="content-block" style="text-align: center">Home</h2>
 <dx-data-grid
+  [width]="'100%'"
   id="id"
   [dataSource]="dataSource"
-  [width]="'100%'"
   >
-  <!-- [focusedRowEnabled]="true"
-  [(focusedRowKey)]="dataSource.id" -->
+  <!-- [dataSource]="gridConfigs.listData.list | async" -->
   <dxo-paging [pageSize]="5"></dxo-paging>
 
   <dxo-editing
-    mode="row"
     [allowUpdating]="gridConfigs.enableEditing"
     [useIcons]="true"
+    mode="row"
   ></dxo-editing>
 
   <dxo-pager

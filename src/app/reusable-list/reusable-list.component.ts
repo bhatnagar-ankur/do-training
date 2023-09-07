@@ -24,11 +24,12 @@ export class ReusableListComponent implements OnInit {
   @Input() gridConfigs: ITDataGridSystem = {
     enableEditing: true,
     enableSearchPanel: true,
-    listData: this.dataSource,
+    listData: this.dataSource ,
     page: [5, 10],
   };
 
   ngOnInit(): void {
+    console.log(this.gridConfigs.listData,"here is res")
     this.empService.getEmployeeList().subscribe((res) => {
       this.dataSource = res.list;
       console.log(res);
