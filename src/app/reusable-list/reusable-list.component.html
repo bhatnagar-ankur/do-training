@@ -1,14 +1,21 @@
 <h1>Reusable-list works!</h1>
 <!-- json-server --watch db.json // command for fake api run -->
 <h2 class="content-block" style="text-align: center">Home</h2>
-<dx-data-grid id="gridContainer" [dataSource]="dataSource" [width]="'100%'">
+<dx-data-grid
+  id="id"
+  [dataSource]="dataSource"
+  [width]="'100%'"
+  >
+  <!-- [focusedRowEnabled]="true"
+  [(focusedRowKey)]="dataSource.id" -->
   <dxo-paging [pageSize]="5"></dxo-paging>
+
   <dxo-editing
     mode="row"
     [allowUpdating]="true"
     [useIcons]="true"
   ></dxo-editing>
- 
+
   <dxo-pager
     [showPageSizeSelector]="true"
     [allowedPageSizes]="[5, 8, 10, 14]"
