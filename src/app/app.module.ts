@@ -14,6 +14,7 @@ import { TestComponent } from './test/test.component';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { Page1Component } from './page1/page1.component';
 import { Page2Component } from './page2/page2.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { Page2Component } from './page2/page2.component';
     TestComponent,
     Page1Component,
     Page2Component,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

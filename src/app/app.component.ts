@@ -2,6 +2,8 @@
 import { Component } from '@angular/core';
 import { EmployeeService } from './employee.service';
 import { ITDataGridSystem, ITDataSourceType } from './allTypes';
+import { NavbarComponent } from './navbar/navbar.component';
+
 
 @Component({
   selector: 'app-root',
