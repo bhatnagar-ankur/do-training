@@ -1,14 +1,14 @@
 nav {
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: flex;
   background-color: #e5edda;
 }
 
 ul {
   display: flex;
   flex-direction: row;
-  padding: 4px 0; 
+  padding: 4px 0;
 }
 
 li {

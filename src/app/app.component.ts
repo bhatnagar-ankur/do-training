@@ -2,7 +2,6 @@
 import { Component } from '@angular/core';
 import { EmployeeService } from './employee.service';
 import { ITDataGridSystem, ITDataSourceType } from './allTypes';
-import { NavbarComponent } from './navbar/navbar.component';
 
 
 @Component({
@@ -28,7 +27,7 @@ export class AppComponent {
   gridConfigs: ITDataGridSystem = {
     enableEditing: true,
     enableSearchPanel: true,
-    listData: this.dataSource,
+    // listData: this.dataSource,
     page: [5, 10, 20, 30],
   };
 

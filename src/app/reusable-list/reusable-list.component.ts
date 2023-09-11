@@ -20,18 +20,20 @@ export class ReusableListComponent implements OnInit {
   };
 
   constructor(public empService: EmployeeService) {}
-  @Input() value = '';
+  @Input() value: string = 'DataGrid';
   @Input() gridConfigs: ITDataGridSystem = {
     enableEditing: true,
     enableSearchPanel: true,
-    listData: this.dataSource ,
+    // listData: this.dataSource ,
     page: [5, 10],
   };
 
+  @Input() listData = {};//this is default data
+
   ngOnInit(): void {
-    console.log(this.gridConfigs.listData,"here is res")
+    // console.log(this.gridConfigs.listData,"here is res")
     this.empService.getEmployeeList().subscribe((res) => {
-      this.dataSource = res.list;
+      this.listData = res.list;
       console.log(res);
     });
   }
