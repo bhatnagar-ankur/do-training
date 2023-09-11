@@ -16,9 +16,9 @@ export class Page2Component implements OnInit {
     pageSize: 7,
   };
 
-  listData = {};
+  listData = [];
 
   ngOnInit(): void {
-    this.listData = globalData.employee.info;
+    this.listData = globalData.employee.info as [];
   }
 }

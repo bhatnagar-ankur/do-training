@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { ITDataGridSystem } from '../allTypes';
 
@@ -8,7 +8,7 @@ import { ITDataGridSystem } from '../allTypes';
   styleUrls: ['./reusable-list.component.scss'],
   providers: [EmployeeService],
 })
-export class ReusableListComponent implements OnInit {
+export class ReusableListComponent {
   dataSource: any = {
     age: 20,
     city: 'new',
@@ -28,13 +28,5 @@ export class ReusableListComponent implements OnInit {
     pageSize: 5,
   };
 
-  @Input() listData = {}; //this is default data
-
-  ngOnInit(): void {
-    // console.log(this.gridConfigs.listData,"here is res")
-    this.empService.getEmployeeList().subscribe((res) => {
-      // this.listData = res.list;
-      // console.log(res);
-    });
-  }
+  @Input() listData = []; //this is default data
 }

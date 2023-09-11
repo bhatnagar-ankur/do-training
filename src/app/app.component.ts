@@ -32,13 +32,7 @@ export class AppComponent {
     pageSize:5,
   };
 
-  ngOnInit(): void {
-    this.empService.getEmployeeList().subscribe((res) => {
-      this.dataSource = res.list;
-      // this.gridConfigs.listData = res.list;
-      // console.log(res);
-    });
-  }
+  
 
   helloWorld(): void {
     console.log('hello world', this.title);

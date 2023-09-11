@@ -13,3 +13,12 @@ export interface ITDataSourceType {
   id: number;
   name: string;
 }
+
+export interface ITDataSourceList {
+  city: string;
+  credit_card_company: string;
+  phone: string;
+  title: string;
+  username: string;
+}
+

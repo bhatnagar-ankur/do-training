@@ -16,6 +16,7 @@ import { Page1Component } from './page1/page1.component';
 import { Page2Component } from './page2/page2.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AboutComponent } from './about/about.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AboutComponent } from './about/about.component';
     Page2Component,
     NavbarComponent,
     AboutComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,7 @@ import { AboutComponent } from './about/about.component';
     RouterModule.forRoot([{ path: 'page1', component: Page1Component }]),
     RouterModule.forRoot([{ path: 'page2', component: Page2Component }]),
     RouterModule.forRoot([{ path: 'about', component: AboutComponent }]),
+    RouterModule.forRoot([{ path: 'test', component: TestComponent }]),
     RouterOutlet,
   ],
 
