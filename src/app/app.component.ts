@@ -29,13 +29,14 @@ export class AppComponent {
     enableSearchPanel: true,
     // listData: this.dataSource,
     page: [5, 10, 20, 30],
+    pageSize:5,
   };
 
   ngOnInit(): void {
     this.empService.getEmployeeList().subscribe((res) => {
       this.dataSource = res.list;
       // this.gridConfigs.listData = res.list;
-      console.log(res);
+      // console.log(res);
     });
   }
 

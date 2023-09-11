@@ -1,8 +1,8 @@
 export interface ITDataGridSystem {
   enableEditing: boolean;
   enableSearchPanel: boolean;
-  // listData: any;
   page: number[];
+  pageSize:number;
 }
 
 export interface ITDataSourceType {

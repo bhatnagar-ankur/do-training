@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EmployeeService } from '../employee.service';
-import { ITDataGridSystem, ITDataSourceType } from '../allTypes';
-import DataSource from 'devextreme/data/data_source';
+import { ITDataGridSystem } from '../allTypes';
 
 @Component({
   selector: 'app-reusable-list',
@@ -26,15 +25,16 @@ export class ReusableListComponent implements OnInit {
     enableSearchPanel: true,
     // listData: this.dataSource ,
     page: [5, 10],
+    pageSize: 5,
   };
 
-  @Input() listData = {};//this is default data
+  @Input() listData = {}; //this is default data
 
   ngOnInit(): void {
     // console.log(this.gridConfigs.listData,"here is res")
     this.empService.getEmployeeList().subscribe((res) => {
-      this.listData = res.list;
-      console.log(res);
+      // this.listData = res.list;
+      // console.log(res);
     });
   }
 }

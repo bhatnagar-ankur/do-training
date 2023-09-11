@@ -15,6 +15,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { Page1Component } from './page1/page1.component';
 import { Page2Component } from './page2/page2.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     Page1Component,
     Page2Component,
     NavbarComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +37,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserModule,
     RouterModule.forRoot([{ path: 'page1', component: Page1Component }]),
     RouterModule.forRoot([{ path: 'page2', component: Page2Component }]),
+    RouterModule.forRoot([{ path: 'about', component: AboutComponent }]),
     RouterOutlet,
   ],
 

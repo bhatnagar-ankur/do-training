@@ -3,7 +3,7 @@
 <h2 class="content-block" style="text-align: center"> {{value}} </h2>
 <dx-data-grid [width]="'100%'" id="id" [dataSource]="listData">
   <!-- [dataSource]="gridConfigs.listData.list | async" -->
-  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-paging [pageSize]="gridConfigs.pageSize"></dxo-paging>
 
   <dxo-editing
     [allowUpdating]="gridConfigs.enableEditing"
@@ -19,10 +19,10 @@
     [visible]="gridConfigs.enableSearchPanel"
     [highlightCaseSensitive]="true"
   ></dxo-search-panel>
-
+<!-- 
   <ng-template *ngFor="let item of dataSource">
     <dxi-column dataField="{{ item }}" caption="{{ item }}"></dxi-column>
-  </ng-template>
+  </ng-template> -->
   <!-- <dxi-column dataField="id" caption="Id"></dxi-column>
   <dxi-column dataField="name" caption="Name"></dxi-column>
   <dxi-column dataField="email" caption="Email"></dxi-column>
