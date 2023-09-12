@@ -20,7 +20,7 @@
     [visible]="gridConfigs.enableSearchPanel"
     [highlightCaseSensitive]="true"
   ></dxo-search-panel>
-  <ng-template *ngFor="let item of getColumns; let i; of: updatedColumns">
+  <ng-template *ngFor="let item of getColumns; let i of updatedColumns">
     <dxi-column [dataField]="item" [caption]="i"></dxi-column>
   </ng-template>
 </dx-data-grid>

@@ -42,6 +42,7 @@ export class ReusableListComponent implements OnInit {
       'credit_card_company',
       'credit card'
     );
-    console.log('inside the resuable', this.getColumns,this.updatedColumns);
+
+    console.log('inside the resuable', this.getColumns, this.updatedColumns);
   }
 }
