@@ -16,11 +16,11 @@
     [showPageSizeSelector]="true"
     [allowedPageSizes]="gridConfigs.page"
   ></dxo-pager>
+  <div *ngFor="let item of getColumns; let i of updatedColumns">
   <dxo-search-panel
     [visible]="gridConfigs.enableSearchPanel"
     [highlightCaseSensitive]="true"
   ></dxo-search-panel>
-  <ng-template *ngFor="let item of getColumns; let i of updatedColumns">
-    <dxi-column [dataField]="item" [caption]="i"></dxi-column>
-  </ng-template>
-</dx-data-grid>
+  <dxi-column [dataField]="item" [caption]="i"></dxi-column>
+  </div>
+</dx-data-grid> 

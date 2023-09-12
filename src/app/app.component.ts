@@ -31,6 +31,6 @@ export class AppComponent {
   };
 
   helloWorld(): void {
-    console.log('hello world', this.title);
+    // console.log('hello world', this.title);
   }
 }

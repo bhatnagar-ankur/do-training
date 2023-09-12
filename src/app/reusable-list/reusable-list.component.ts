@@ -40,9 +40,9 @@ export class ReusableListComponent implements OnInit {
     this.updatedColumns = this.replaceItemInArray(
       this.getColumns,
       'credit_card_company',
-      'credit card'
+      'ccc'
     );
 
-    console.log('inside the resuable', this.getColumns, this.updatedColumns);
+    // console.log('inside the resuable', this.getColumns, this.updatedColumns);
   }
 }
