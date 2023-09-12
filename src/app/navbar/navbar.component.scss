@@ -1,0 +1,29 @@
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: flex;
+  background-color: #e5edda;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  padding: 4px 0;
+}
+
+li {
+  padding: 10px 20px;
+  font-size: 20px;
+  list-style-type: none;
+  text-transform: capitalize;
+}
+
+li:hover {
+  background-color: #a8dcd6;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
