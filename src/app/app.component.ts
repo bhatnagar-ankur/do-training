@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { EmployeeService } from './employee.service';
 import { ITDataGridSystem, ITDataSourceType } from './allTypes';
 
-
 @Component({
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
@@ -27,12 +26,9 @@ export class AppComponent {
   gridConfigs: ITDataGridSystem = {
     enableEditing: true,
     enableSearchPanel: true,
-    // listData: this.dataSource,
     page: [5, 10, 20, 30],
-    pageSize:5,
+    pageSize: 5,
   };
-
-  
 
   helloWorld(): void {
     console.log('hello world', this.title);

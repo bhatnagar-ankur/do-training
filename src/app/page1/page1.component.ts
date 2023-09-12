@@ -11,7 +11,6 @@ export class Page1Component implements OnInit {
   gridConfigs: ITDataGridSystem = {
     enableEditing: true,
     enableSearchPanel: true,
-    // listData: {},
     page: [10, 14, 20],
     pageSize: 10,
   };
