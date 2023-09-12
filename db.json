@@ -1,0 +1,423 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "employee": {
+    "list": [
+      {
+        "id": 1,
+        "name": "Frank",
+        "email": "frank@gmail.com",
+        "age": 30,
+        "department": "HR",
+        "city": "Bengaluru"
+      },
+      {
+        "id": 2,
+        "name": "Jack",
+        "email": "jack@outlook.com",
+        "age": 28,
+        "department": "Marketing",
+        "city": "Chennai"
+      },
+      {
+        "id": 3,
+        "name": "Bob",
+        "email": "bob@gmail.com",
+        "age": 26,
+        "department": "Marketing",
+        "city": "Delhi"
+      },
+      {
+        "id": 4,
+        "name": "Frank",
+        "email": "frank@gmail.com",
+        "age": 62,
+        "department": "Engineering",
+        "city": "Delhi"
+      },
+      {
+        "id": 5,
+        "name": "Jack",
+        "email": "jack@outlook.com",
+        "age": 60,
+        "department": "Finance",
+        "city": "Bengaluru"
+      },
+      {
+        "id": 6,
+        "name": "Alice",
+        "email": "alice@yahoo.com",
+        "age": 49,
+        "department": "Finance",
+        "city": "Hyderabad"
+      },
+      {
+        "id": 7,
+        "name": "Bob",
+        "email": "bob@bing.com",
+        "age": 35,
+        "department": "Marketing",
+        "city": "Delhi"
+      },
+      {
+        "id": 8,
+        "name": "Charlie",
+        "email": "charlie@outlook.com",
+        "age": 42,
+        "department": "Finance",
+        "city": "Hyderabad"
+      },
+      {
+        "id": 9,
+        "name": "Frank",
+        "email": "frank@gmail.com",
+        "age": 65,
+        "department": "Sales",
+        "city": "Mumbai"
+      },
+      {
+        "id": 10,
+        "name": "David",
+        "email": "david@yahoo.com",
+        "age": 59,
+        "department": "HR",
+        "city": "Chennai"
+      },
+      {
+        "id": 11,
+        "name": "Harry",
+        "email": "harry@yahoo.com",
+        "age": 30,
+        "department": "Engineering",
+        "city": "Kolkata"
+      },
+      {
+        "id": 12,
+        "name": "Frank",
+        "email": "frank@bing.com",
+        "age": 62,
+        "department": "Sales",
+        "city": "Bengaluru"
+      },
+      {
+        "id": 13,
+        "name": "Bob",
+        "email": "bob@outlook.com",
+        "age": 46,
+        "department": "Marketing",
+        "city": "Chennai"
+      },
+      {
+        "id": 14,
+        "name": "Grace",
+        "email": "grace@gmail.com",
+        "age": 62,
+        "department": "Support",
+        "city": "Chennai"
+      },
+      {
+        "id": 15,
+        "name": "Frank",
+        "email": "frank@gmail.com",
+        "age": 37,
+        "department": "Support",
+        "city": "Chennai"
+      },
+      {
+        "id": 16,
+        "name": "Eve",
+        "email": "eve@gmail.com",
+        "age": 20,
+        "department": "HR",
+        "city": "Hyderabad"
+      },
+      {
+        "id": 17,
+        "name": "Ivy",
+        "email": "ivy@outlook.com",
+        "age": 61,
+        "department": "HR",
+        "city": "Mumbai"
+      },
+      {
+        "id": 18,
+        "name": "Charlie",
+        "email": "charlie@bing.com",
+        "age": 27,
+        "department": "Marketing",
+        "city": "Bengaluru"
+      },
+      {
+        "id": 19,
+        "name": "Eve",
+        "email": "eve@outlook.com",
+        "age": 56,
+        "department": "Marketing",
+        "city": "Hyderabad"
+      },
+      {
+        "id": 20,
+        "name": "Ivy",
+        "email": "ivy@outlook.com",
+        "age": 20,
+        "department": "Sales",
+        "city": "Bengaluru"
+      },
+      {
+        "id": 21,
+        "name": "Frank",
+        "email": "frank@bing.com",
+        "age": 46,
+        "department": "Sales",
+        "city": "Mumbai"
+      },
+      {
+        "id": 22,
+        "name": "Frank",
+        "email": "frank@gmail.com",
+        "age": 38,
+        "department": "Support",
+        "city": "Bengaluru"
+      },
+      {
+        "id": 23,
+        "name": "Jack",
+        "email": "jack@gmail.com",
+        "age": 18,
+        "department": "HR",
+        "city": "Hyderabad"
+      },
+      {
+        "id": 24,
+        "name": "David",
+        "email": "david@outlook.com",
+        "age": 38,
+        "department": "HR",
+        "city": "Chennai"
+      },
+      {
+        "id": 25,
+        "name": "Ivy",
+        "email": "ivy@yahoo.com",
+        "age": 40,
+        "department": "Engineering",
+        "city": "Kolkata"
+      },
+      {
+        "id": 26,
+        "name": "Charlie",
+        "email": "charlie@outlook.com",
+        "age": 27,
+        "department": "Sales",
+        "city": "Bengaluru"
+      },
+      {
+        "id": 27,
+        "name": "Grace",
+        "email": "grace@gmail.com",
+        "age": 27,
+        "department": "Support",
+        "city": "Chennai"
+      },
+      {
+        "id": 28,
+        "name": "Grace",
+        "email": "grace@bing.com",
+        "age": 42,
+        "department": "Sales",
+        "city": "Hyderabad"
+      },
+      {
+        "id": 29,
+        "name": "Bob",
+        "email": "bob@yahoo.com",
+        "age": 62,
+        "department": "Marketing",
+        "city": "Hyderabad"
+      },
+      {
+        "id": 30,
+        "name": "Charlie",
+        "email": "charlie@bing.com",
+        "age": 64,
+        "department": "Finance",
+        "city": "Mumbai"
+      },
+      {
+        "id": 31,
+        "name": "Jack",
+        "email": "jack@gmail.com",
+        "age": 20,
+        "department": "Sales",
+        "city": "Mumbai"
+      },
+      {
+        "id": 32,
+        "name": "David",
+        "email": "david@gmail.com",
+        "age": 60,
+        "department": "HR",
+        "city": "Bengaluru"
+      },
+      {
+        "id": 33,
+        "name": "Ivy",
+        "email": "ivy@bing.com",
+        "age": 20,
+        "department": "Sales",
+        "city": "Chennai"
+      },
+      {
+        "id": 34,
+        "name": "Frank",
+        "email": "frank@gmail.com",
+        "age": 40,
+        "department": "Marketing",
+        "city": "Kolkata"
+      },
+      {
+        "id": 35,
+        "name": "Jack",
+        "email": "jack@bing.com",
+        "age": 44,
+        "department": "Sales",
+        "city": "Bengaluru"
+      },
+      {
+        "id": 36,
+        "name": "Ivy",
+        "email": "ivy@yahoo.com",
+        "age": 26,
+        "department": "Marketing",
+        "city": "Hyderabad"
+      },
+      {
+        "id": 37,
+        "name": "Frank",
+        "email": "frank@gmail.com",
+        "age": 41,
+        "department": "HR",
+        "city": "Delhi"
+      },
+      {
+        "id": 38,
+        "name": "Eve",
+        "email": "eve@yahoo.com",
+        "age": 46,
+        "department": "HR",
+        "city": "Chennai"
+      },
+      {
+        "id": 39,
+        "name": "Eve",
+        "email": "eve@yahoo.com",
+        "age": 41,
+        "department": "Finance",
+        "city": "Mumbai"
+      },
+      {
+        "id": 40,
+        "name": "Charlie",
+        "email": "charlie@outlook.com",
+        "age": 62,
+        "department": "Marketing",
+        "city": "Kolkata"
+      },
+      {
+        "id": 41,
+        "name": "Frank",
+        "email": "frank@bing.com",
+        "age": 28,
+        "department": "Marketing",
+        "city": "Chennai"
+      },
+      {
+        "id": 42,
+        "name": "Bob",
+        "email": "bob@gmail.com",
+        "age": 64,
+        "department": "Support",
+        "city": "Chennai"
+      },
+      {
+        "id": 43,
+        "name": "David",
+        "email": "david@bing.com",
+        "age": 57,
+        "department": "HR",
+        "city": "Hyderabad"
+      },
+      {
+        "id": 44,
+        "name": "Grace",
+        "email": "grace@outlook.com",
+        "age": 46,
+        "department": "Sales",
+        "city": "Kolkata"
+      },
+      {
+        "id": 45,
+        "name": "Frank",
+        "email": "frank@gmail.com",
+        "age": 56,
+        "department": "HR",
+        "city": "Delhi"
+      },
+      {
+        "id": 46,
+        "name": "Alice",
+        "email": "alice@yahoo.com",
+        "age": 47,
+        "department": "Marketing",
+        "city": "Bengaluru"
+      },
+      {
+        "id": 47,
+        "name": "Frank",
+        "email": "frank@bing.com",
+        "age": 20,
+        "department": "Sales",
+        "city": "Mumbai"
+      },
+      {
+        "id": 48,
+        "name": "Alice",
+        "email": "alice@yahoo.com",
+        "age": 36,
+        "department": "Finance",
+        "city": "Chennai"
+      },
+      {
+        "id": 49,
+        "name": "Bob",
+        "email": "bob@gmail.com",
+        "age": 40,
+        "department": "Engineering",
+        "city": "Mumbai"
+      },
+      {
+        "id": 50,
+        "name": "Eve",
+        "email": "eve@outlook.com",
+        "age": 26,
+        "department": "Sales",
+        "city": "Kolkata"
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+<h2 class="content-block" style="text-align: center">Home</h2>
+<dx-data-grid id="gridContainer" [dataSource]="dataSource" [width]="'90%'">
+  <dxo-paging [pageSize]="5"></dxo-paging>
+  <dxo-editing
+    mode="row"
+    [allowUpdating]="true"
+    [useIcons]="true"
+  ></dxo-editing>
+  <!-- [allowDeleting]="allowDeleting" -->
+  <dxo-pager
+    [showPageSizeSelector]="true"
+    [allowedPageSizes]="[5, 8, 13, 14]"
+  ></dxo-pager>
+  <dxo-search-panel
+    [visible]="true"
+    [highlightCaseSensitive]="true"
+  ></dxo-search-panel>
+
+  <ng-template *ngFor="let item of dataSource">
+    <dxi-column dataField="{{ item }}" caption="{{ item }}"></dxi-column>
+  </ng-template>
+  <!-- <dxi-column dataField="id" caption="Id"></dxi-column>
+  <dxi-column dataField="name" caption="Name"></dxi-column>
+  <dxi-column dataField="email" caption="Email"></dxi-column>
+  <dxi-column dataField="age" caption="Age"></dxi-column>
+  <dxi-column dataField="department" caption="Department"></dxi-column>
+  <dxi-column dataField="city" caption="City"></dxi-column> -->
+</dx-data-grid>
+<app-reusable-list></app-reusable-list>
+
