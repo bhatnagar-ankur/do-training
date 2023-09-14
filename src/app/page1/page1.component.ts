@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ITDataGridSystem, ITDataSourceList } from '../allTypes';
-import { globalData } from '../globalData';
 import { EmployeeService } from '../employee.service';
 
 @Component({
@@ -9,8 +8,7 @@ import { EmployeeService } from '../employee.service';
   styleUrls: ['./page1.component.scss'],
 })
 export class Page1Component implements OnInit {
-
-  constructor( private _empService:EmployeeService ){}
+  constructor(private _empService: EmployeeService) {}
 
   gridConfigs: ITDataGridSystem = {
     enableEditing: true,
@@ -19,14 +17,14 @@ export class Page1Component implements OnInit {
     pageSize: 10,
   };
 
-
   columns: string[] = ['id', 'city', 'name', 'department', 'email'];
   listData: ITDataSourceList[] = [];
   groupIndexColumnName = 'name';
 
   ngOnInit(): void {
-    this.listData = globalData.employee.list as [];
-   console.log( this._empService.getEmployeeList(),"here is value");
+    this._empService.getEmployeeList().subscribe((data: any) => {
+      this.listData = data.list as any;
+    });
   }
 }
 

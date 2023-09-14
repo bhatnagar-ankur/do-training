@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ITDataGridSystem } from '../allTypes';
-import { globalData } from '../globalData';
+import { EmployeeService } from '../employee.service';
 
 @Component({
   selector: 'app-page2',
   templateUrl: './page2.component.html',
   styleUrls: ['./page2.component.scss'],
 })
-
 export class Page2Component implements OnInit {
+  constructor(private _empService: EmployeeService) {}
+
   gridConfigs: ITDataGridSystem = {
     enableEditing: false,
     enableSearchPanel: true,
@@ -21,7 +22,9 @@ export class Page2Component implements OnInit {
   groupIndexColumnName = 'credit_card_company';
 
   ngOnInit(): void {
-    this.listData = globalData.employee.info as [];
+    this._empService.getEmployeeList().subscribe((data: any) => {
+      this.listData = data.info as any;
+    });
   }
 }
 
