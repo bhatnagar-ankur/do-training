@@ -5,6 +5,12 @@
   [dataSource]="listData"
   [rowAlternationEnabled]="true"
 >
+  <dxo-state-storing
+    [enabled]="true"
+    type="localStorage"
+    storageKey="gridState"
+  ></dxo-state-storing>
+
   <dxo-paging [pageSize]="gridConfigs.pageSize"></dxo-paging>
   <dxo-editing
     [allowUpdating]="gridConfigs.enableEditing"
@@ -17,10 +23,11 @@
     [allowedPageSizes]="gridConfigs.page"
   ></dxo-pager>
   <dxo-search-panel
-  [visible]="gridConfigs.enableSearchPanel"
-  [highlightCaseSensitive]="true"
+    [visible]="gridConfigs.enableSearchPanel"
+    [highlightCaseSensitive]="true"
   ></dxo-search-panel>
-  <div *ngFor="let item of getColumns; let i of updatedColumns">
-  <dxi-column [dataField]="item" [caption]="i"></dxi-column>
-  </div>
+
+  <ng-container *ngFor="let item of getColumns">
+    <dxi-column [dataField]="item"></dxi-column>
+  </ng-container>
 </dx-data-grid>

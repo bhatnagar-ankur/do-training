@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ITDataGridSystem } from '../allTypes';
+import { ITDataGridSystem, ITDataSourceList } from '../allTypes';
 import { globalData } from '../globalData';
 
 @Component({
@@ -14,9 +14,11 @@ export class Page1Component implements OnInit {
     page: [10, 14, 20],
     pageSize: 10,
   };
-  
 
-  listData = [];
+  columns: string[] = ['id', 'city', 'name'];
+
+  listData: ITDataSourceList[] = [];
+  storageKey: string = 'datagrid-state';
 
   ngOnInit(): void {
     this.listData = globalData.employee.list as [];

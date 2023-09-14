@@ -1,23 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import DataSource from 'devextreme/data/data_source';
-
+import { Observable } from 'rxjs';
+// import DataSource from 'devextreme/data/data_source';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
-  // list = [];
+  constructor(private _http: HttpClient) {}
 
-  constructor() {}
-
-  getDataSource() {
-    return new DataSource({
-      store: {
-        type: 'odata',
-        url: 'http://localhost:3000/employee',
-        key: 'id',
-      },
-    });
+  getEmployeeList(): Observable<any> {
+    return this._http.get('http://localhost:3000/employee');
   }
 }
-
