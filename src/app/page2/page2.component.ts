@@ -7,6 +7,7 @@ import { globalData } from '../globalData';
   templateUrl: './page2.component.html',
   styleUrls: ['./page2.component.scss'],
 })
+
 export class Page2Component implements OnInit {
   gridConfigs: ITDataGridSystem = {
     enableEditing: false,
@@ -16,12 +17,13 @@ export class Page2Component implements OnInit {
   };
 
   columns: string[] = ['username', 'city', 'credit_card_company', 'phone'];
-
-  groupIndexColumnName = 'credit_card_company';
-
   listData = [];
+  groupIndexColumnName = 'credit_card_company';
 
   ngOnInit(): void {
     this.listData = globalData.employee.info as [];
   }
 }
+
+// to run the fake json db server run this command
+// json-server --watch db.json

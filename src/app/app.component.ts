@@ -9,6 +9,9 @@ import { EmployeeService } from './employee.service';
 })
 export class AppComponent {
   title = 'reusable-devextreme';
-
   constructor(public empService: EmployeeService) {}
 }
+
+
+// to run the fake json db server run this command
+// json-server --watch db.json
