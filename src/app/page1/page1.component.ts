@@ -10,7 +10,7 @@ import { globalData } from '../globalData';
 export class Page1Component implements OnInit {
   gridConfigs: ITDataGridSystem = {
     enableEditing: true,
-    enableSearchPanel: true,
+    enableSearchPanel: false,
     page: [10, 14, 20],
     pageSize: 10,
   };
