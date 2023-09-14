@@ -15,6 +15,10 @@ export class Page2Component implements OnInit {
     pageSize: 7,
   };
 
+  columns: string[] = ['username', 'city', 'credit_card_company', 'phone'];
+
+  groupIndexColumnName = 'credit_card_company';
+
   listData = [];
 
   ngOnInit(): void {

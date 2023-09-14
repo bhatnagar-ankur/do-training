@@ -15,10 +15,9 @@ export class Page1Component implements OnInit {
     pageSize: 10,
   };
 
-  columns: string[] = ['id', 'city', 'name'];
-
+  columns: string[] = ['id', 'city', 'name', 'department', 'email'];
   listData: ITDataSourceList[] = [];
-  storageKey: string = 'datagrid-state';
+  groupIndexColumnName = 'name';
 
   ngOnInit(): void {
     this.listData = globalData.employee.list as [];

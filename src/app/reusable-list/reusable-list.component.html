@@ -9,25 +9,32 @@
     [enabled]="true"
     type="localStorage"
     storageKey="gridState"
-  ></dxo-state-storing>
-
-  <dxo-paging [pageSize]="gridConfigs.pageSize"></dxo-paging>
+  />
+  <dxo-paging [pageSize]="gridConfigs.pageSize" />
+   <dxo-group-panel [visible]="true" />
   <dxo-editing
     [allowUpdating]="gridConfigs.enableEditing"
     [useIcons]="true"
     mode="row"
-  ></dxo-editing>
-
+  />
   <dxo-pager
     [showPageSizeSelector]="true"
     [allowedPageSizes]="gridConfigs.page"
-  ></dxo-pager>
+  />
   <dxo-search-panel
     [visible]="gridConfigs.enableSearchPanel"
     [highlightCaseSensitive]="true"
-  ></dxo-search-panel>
-
+  />
   <ng-container *ngFor="let item of getColumns">
-    <dxi-column [dataField]="item"></dxi-column>
+    <dxi-column
+      [dataField]="item"
+      *ngIf="item === groupIndexColumnName; else elseBlock"
+      [groupIndex]= "0"
+    />
+
+    <ng-template #elseBlock>
+      <dxi-column [dataField]="item" />
+    </ng-template>
   </ng-container>
 </dx-data-grid>
+<h4>configs: {{ gridConfigs | json }}</h4>
