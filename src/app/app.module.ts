@@ -14,6 +14,7 @@ import {
   DxDataGridModule,
   DxTemplateModule,
   DxButtonModule,
+  DxFilterBuilderModule,
 } from 'devextreme-angular';
 
 @NgModule({
@@ -39,6 +40,7 @@ import {
     RouterModule.forRoot([{ path: 'page1', component: Page1Component }]),
     RouterModule.forRoot([{ path: 'page2', component: Page2Component }]),
     RouterOutlet,
+    DxFilterBuilderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

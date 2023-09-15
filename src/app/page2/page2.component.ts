@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ITDataGridSystem } from '../allTypes';
 import { EmployeeService } from '../employee.service';
+
 
 @Component({
   selector: 'app-page2',
@@ -8,7 +9,15 @@ import { EmployeeService } from '../employee.service';
   styleUrls: ['./page2.component.scss'],
 })
 export class Page2Component implements OnInit {
-  constructor(private _empService: EmployeeService) {}
+  filterValue: any = [];
+
+  constructor(private _empService: EmployeeService ,private _changeDetect:ChangeDetectorRef) {
+    this.filterValue = [
+      ['credit_card_company', '=', 'VISA'],
+      'or',
+      // ['city', '=', 'Chennai'],
+    ];
+  }
 
   gridConfigs: ITDataGridSystem = {
     enableEditing: false,
@@ -18,13 +27,20 @@ export class Page2Component implements OnInit {
   };
 
   columns: string[] = ['username', 'city', 'credit_card_company', 'phone'];
-  listData = [];
+
   groupIndexColumnName = 'credit_card_company';
+  listData = [];
 
   ngOnInit(): void {
+    this._changeDetect.detectChanges()
     this._empService.getEmployeeList().subscribe((data: any) => {
       this.listData = data.info as any;
     });
+    this.filterValue = [
+      ['credit_card_company', '=', 'VISA'],
+      'or',
+      // ['city', '=', 'Chennai'],
+    ];
   }
 }
 

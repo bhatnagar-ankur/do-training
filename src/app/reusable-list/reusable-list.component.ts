@@ -14,7 +14,14 @@ import { DxDataGridComponent } from 'devextreme-angular';
   providers: [EmployeeService],
 })
 export class ReusableListComponent {
-  constructor() {}
+  @Input() filterValue = [
+    ['department', '=', 'Finance'],
+    'or',
+    ['city', '=', 'Chennai'],
+  ];
+  gridFilterValue: any;
+  groupIndex: number = 0;
+  popupPosition: any;
 
   @ViewChild(DxDataGridComponent, { static: false })
   dataGrid!: DxDataGridComponent;
@@ -30,7 +37,6 @@ export class ReusableListComponent {
   @Input() value: string = 'DataGrid';
   updatedColumns: any = [];
 
-  groupIndex: number = 0;
   @Input() groupIndexColumnName: string = '';
 
   replaceItemInArray = (
@@ -40,17 +46,17 @@ export class ReusableListComponent {
   ): string[] | number[] =>
     givenArray.map((item: any) => (item === oldItem ? newItem : item));
 
-  saveGridState() {
-    if (this.dataGrid) {
-      const gridState = this.dataGrid.instance.state();
-      localStorage.setItem('gridState', JSON.stringify(gridState));
-    }
-  }
-
   restoreGridState() {
     const savedState = localStorage.getItem('gridState');
     if (this.dataGrid && savedState) {
       this.dataGrid.instance.state(JSON.parse(savedState));
+    }
+  }
+
+  saveGridState() {
+    if (this.dataGrid) {
+      const gridState = this.dataGrid.instance.state();
+      localStorage.setItem('gridState', JSON.stringify(gridState));
     }
   }
 }

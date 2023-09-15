@@ -4,14 +4,19 @@
   id="id"
   [dataSource]="listData"
   [rowAlternationEnabled]="true"
+  [filterSyncEnabled]="true"
+  [filterValue]="filterValue"
 >
   <dxo-state-storing
     [enabled]="true"
     type="localStorage"
     storageKey="gridState"
   />
+  <dxo-filter-panel [visible]="true"></dxo-filter-panel>
   <dxo-paging [pageSize]="gridConfigs.pageSize" />
-   <dxo-group-panel [visible]="true" />
+  <dxo-group-panel [visible]="true" />
+  <dxo-filter-row [visible]="true"></dxo-filter-row>
+  <dxo-header-filter [visible]="true"></dxo-header-filter>
   <dxo-editing
     [allowUpdating]="gridConfigs.enableEditing"
     [useIcons]="true"
@@ -29,7 +34,7 @@
     <dxi-column
       [dataField]="item"
       *ngIf="item === groupIndexColumnName; else elseBlock"
-      [groupIndex]= "0"
+      [groupIndex]="0"
     />
 
     <ng-template #elseBlock>
@@ -37,4 +42,4 @@
     </ng-template>
   </ng-container>
 </dx-data-grid>
-<h4>configs: {{ gridConfigs | json }}</h4>
+<h4>configs: {{ filterValue | json }}</h4>
