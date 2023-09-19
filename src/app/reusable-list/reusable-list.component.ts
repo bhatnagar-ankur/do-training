@@ -14,11 +14,7 @@ import { DxDataGridComponent } from 'devextreme-angular';
   providers: [EmployeeService],
 })
 export class ReusableListComponent {
-  @Input() filterValue = [
-    ['department', '=', 'Finance'],
-    'or',
-    ['city', '=', 'Chennai'],
-  ];
+  @Input() filterValue = [];
   gridFilterValue: any;
   groupIndex: number = 0;
   popupPosition: any;
