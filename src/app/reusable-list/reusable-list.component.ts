@@ -6,6 +6,7 @@ import {
   ITDataSourceType,
 } from '../allTypes';
 import { DxDataGridComponent } from 'devextreme-angular';
+// import { DxDataGridModule } from 'devextreme-angular';
 
 @Component({
   selector: 'app-reusable-list',
@@ -14,13 +15,23 @@ import { DxDataGridComponent } from 'devextreme-angular';
   providers: [EmployeeService],
 })
 export class ReusableListComponent {
+  customizeColumns(columns: any) {
+    // columns[0].width = 100;
+    // columns[1].width = 210;
+    // columns[1].shadingColor = '#203fe1';
+    // columns[2].shadingColor = 'red';
+  }
+
+  @ViewChild(DxDataGridComponent, {
+    static: false,
+  })
+  dataGrid!: DxDataGridComponent;
+
   @Input() filterValue = [];
   gridFilterValue: any;
   groupIndex: number = 0;
   popupPosition: any;
-
-  @ViewChild(DxDataGridComponent, { static: false })
-  dataGrid!: DxDataGridComponent;
+  // currentColor = '#f05b41';
 
   @Input() getColumns: string[] = [];
   @Input() gridConfigs: ITDataGridSystem = {
@@ -44,9 +55,8 @@ export class ReusableListComponent {
 
   restoreGridState() {
     const savedState = localStorage.getItem('gridState');
-    if (this.dataGrid && savedState) {
+    if (this.dataGrid && savedState)
       this.dataGrid.instance.state(JSON.parse(savedState));
-    }
   }
 
   saveGridState() {

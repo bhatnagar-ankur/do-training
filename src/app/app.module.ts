@@ -15,7 +15,9 @@ import {
   DxTemplateModule,
   DxButtonModule,
   DxFilterBuilderModule,
+  DxColorBoxModule,
 } from 'devextreme-angular';
+import { UsdInrPipe } from './pipes/usd-inr.pipe';
 
 @NgModule({
   declarations: [
@@ -26,21 +28,24 @@ import {
     Page2Component,
     ReusableListComponent,
     TestComponent,
+    UsdInrPipe,
   ],
   imports: [
     BrowserModule,
     BrowserModule,
     DxBulletModule,
     DxButtonModule,
+    DxColorBoxModule,
     DxDataGridModule,
+    DxFilterBuilderModule,
     DxTemplateModule,
     HttpClientModule,
     RouterModule.forRoot([{ path: '', component: Page1Component }]),
     RouterModule.forRoot([{ path: 'about', component: AboutComponent }]),
     RouterModule.forRoot([{ path: 'page1', component: Page1Component }]),
     RouterModule.forRoot([{ path: 'page2', component: Page2Component }]),
+    // RouterModule,
     RouterOutlet,
-    DxFilterBuilderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

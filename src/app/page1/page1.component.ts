@@ -34,7 +34,7 @@ export class Page1Component implements OnInit {
   ngOnInit(): void {
     this._changeDetect.detectChanges();
     this._empService.getEmployeeList().subscribe((data: any) => {
-      this.listData = data.list as any;
+      this.listData = data.list;
       this.filterValue = [
         ['department', '=', 'Finance'],
         'or',

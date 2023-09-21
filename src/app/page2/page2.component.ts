@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ITDataGridSystem } from '../allTypes';
 import { EmployeeService } from '../employee.service';
 
-
 @Component({
   selector: 'app-page2',
   templateUrl: './page2.component.html',
@@ -11,7 +10,10 @@ import { EmployeeService } from '../employee.service';
 export class Page2Component implements OnInit {
   filterValue: any = [];
 
-  constructor(private _empService: EmployeeService ,private _changeDetect:ChangeDetectorRef) {
+  constructor(
+    private _empService: EmployeeService,
+    private _changeDetect: ChangeDetectorRef
+  ) {
     this.filterValue = [
       ['credit_card_company', '=', 'VISA'],
       'or',
@@ -32,7 +34,7 @@ export class Page2Component implements OnInit {
   listData = [];
 
   ngOnInit(): void {
-    this._changeDetect.detectChanges()
+    this._changeDetect.detectChanges();
     this._empService.getEmployeeList().subscribe((data: any) => {
       this.listData = data.info as any;
     });

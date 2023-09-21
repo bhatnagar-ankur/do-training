@@ -1,45 +1,22 @@
 <h2 class="content-block">{{ value }}</h2>
-<dx-data-grid
-  [width]="'100%'"
-  id="id"
-  [dataSource]="listData"
-  [rowAlternationEnabled]="true"
-  [filterSyncEnabled]="true"
-  [filterValue]="filterValue"
->
-  <dxo-state-storing
-    [enabled]="true"
-    type="localStorage"
-    storageKey="gridState"
-  />
-  <dxo-filter-panel [visible]="true"></dxo-filter-panel>
-  <dxo-paging [pageSize]="gridConfigs.pageSize" />
+<dx-data-grid [dataSource]="listData" [filterSyncEnabled]="true" [rowAlternationEnabled]="true" [width]="'100%'" id="id"
+  [customizeColumns]="customizeColumns">
+  <!-- [filterValue]="filterValue" -->
+  <dxo-editing [allowUpdating]="gridConfigs.enableEditing" [useIcons]="true" mode="row" />
+  <dxo-filter-panel [visible]="true" />
+  <dxo-filter-row [visible]="true" />
   <dxo-group-panel [visible]="true" />
-  <dxo-filter-row [visible]="true"></dxo-filter-row>
-  <dxo-header-filter [visible]="true"></dxo-header-filter>
-  <dxo-editing
-    [allowUpdating]="gridConfigs.enableEditing"
-    [useIcons]="true"
-    mode="row"
-  />
-  <dxo-pager
-    [showPageSizeSelector]="true"
-    [allowedPageSizes]="gridConfigs.page"
-  />
-  <dxo-search-panel
-    [visible]="gridConfigs.enableSearchPanel"
-    [highlightCaseSensitive]="true"
-  />
+  <dxo-header-filter [visible]="true" />
+  <dxo-pager [allowedPageSizes]="gridConfigs.page" [showPageSizeSelector]="true" />
+  <dxo-paging [pageSize]="gridConfigs.pageSize" />
+  <dxo-search-panel [highlightCaseSensitive]="true" [visible]="gridConfigs.enableSearchPanel" />
+  <dxo-state-storing [enabled]="true" type="localStorage" storageKey="gridState" />
   <ng-container *ngFor="let item of getColumns">
-    <dxi-column
-      [dataField]="item"
-      *ngIf="item === groupIndexColumnName; else elseBlock"
-      [groupIndex]="0"
-    />
-
+    <dxi-column *ngIf="item === groupIndexColumnName; else elseBlock" [dataField]="item" [groupIndex]="0" />
     <ng-template #elseBlock>
-      <dxi-column [dataField]="item" />
+      <dxi-column [dataField]="item" cssClass="cell-highlighted" />
     </ng-template>
   </ng-container>
 </dx-data-grid>
 <h4>configs: {{ filterValue | json }}</h4>
+<!-- <div class="rectangle"></div> -->
