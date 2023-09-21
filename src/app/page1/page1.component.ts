@@ -27,6 +27,12 @@ export class Page1Component implements OnInit {
     pageSize: 10,
   };
 
+  customisationOfGrid = {
+    gridBackgroundColor: 'orange',
+    gridTextColor: 'black',
+    highlightedColumnName: 'department',
+  };
+
   columns: string[] = ['id', 'city', 'name', 'department', 'email'];
   listData: ITDataSourceList[] = [];
   groupIndexColumnName = 'name';

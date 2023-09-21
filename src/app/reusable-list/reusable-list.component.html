@@ -1,6 +1,6 @@
 <h2 class="content-block">{{ value }}</h2>
-<dx-data-grid [dataSource]="listData" [filterSyncEnabled]="true" [rowAlternationEnabled]="true" [width]="'100%'" id="id"
-  [customizeColumns]="customizeColumns">
+<dx-data-grid [dataSource]="listData" [filterSyncEnabled]="true" [rowAlternationEnabled]="false" [width]="'100%'"
+  id="GridContainer" (onCellPrepared)="onCellPrepared($event)">
   <!-- [filterValue]="filterValue" -->
   <dxo-editing [allowUpdating]="gridConfigs.enableEditing" [useIcons]="true" mode="row" />
   <dxo-filter-panel [visible]="true" />

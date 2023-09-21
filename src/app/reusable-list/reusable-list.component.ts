@@ -6,7 +6,6 @@ import {
   ITDataSourceType,
 } from '../allTypes';
 import { DxDataGridComponent } from 'devextreme-angular';
-// import { DxDataGridModule } from 'devextreme-angular';
 
 @Component({
   selector: 'app-reusable-list',
@@ -15,13 +14,6 @@ import { DxDataGridComponent } from 'devextreme-angular';
   providers: [EmployeeService],
 })
 export class ReusableListComponent {
-  customizeColumns(columns: any) {
-    // columns[0].width = 100;
-    // columns[1].width = 210;
-    // columns[1].shadingColor = '#203fe1';
-    // columns[2].shadingColor = 'red';
-  }
-
   @ViewChild(DxDataGridComponent, {
     static: false,
   })
@@ -32,6 +24,11 @@ export class ReusableListComponent {
   groupIndex: number = 0;
   popupPosition: any;
   // currentColor = '#f05b41';
+  @Input() customisationOfGrid = {
+    gridBackgroundColor: 'yellow',
+    gridTextColor: 'black',
+    highlightedColumnName: 'id',
+  };
 
   @Input() getColumns: string[] = [];
   @Input() gridConfigs: ITDataGridSystem = {
@@ -45,6 +42,20 @@ export class ReusableListComponent {
   updatedColumns: any = [];
 
   @Input() groupIndexColumnName: string = '';
+
+  onCellPrepared(e: any) {
+    if (e.rowType === 'data') {
+      if (
+        e.column.dataField === this.customisationOfGrid.highlightedColumnName
+      ) {
+        //this should be in lowercase
+        console.log(e, 'here is event');
+        e.cellElement.style.backgroundColor =
+          this.customisationOfGrid.gridBackgroundColor;
+        e.cellElement.style.color = this.customisationOfGrid.gridTextColor;
+      }
+    }
+  }
 
   replaceItemInArray = (
     givenArray: string[] | number[],

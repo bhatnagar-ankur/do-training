@@ -30,6 +30,12 @@ export class Page2Component implements OnInit {
 
   columns: string[] = ['username', 'city', 'credit_card_company', 'phone'];
 
+  customisationOfGrid = {
+    gridBackgroundColor: 'yellow',
+    gridTextColor: 'black',
+    highlightedColumnName: 'phone',
+  };
+
   groupIndexColumnName = 'credit_card_company';
   listData = [];
 
