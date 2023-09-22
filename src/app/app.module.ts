@@ -11,11 +11,11 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { TestComponent } from './test/test.component';
 import {
   DxBulletModule,
-  DxDataGridModule,
-  DxTemplateModule,
   DxButtonModule,
-  DxFilterBuilderModule,
   DxColorBoxModule,
+  DxDataGridModule,
+  DxFilterBuilderModule,
+  DxTemplateModule,
 } from 'devextreme-angular';
 import { UsdInrPipe } from './pipes/usd-inr.pipe';
 
@@ -35,6 +35,7 @@ import { UsdInrPipe } from './pipes/usd-inr.pipe';
     BrowserModule,
     DxBulletModule,
     DxButtonModule,
+    DxColorBoxModule,
     DxColorBoxModule,
     DxDataGridModule,
     DxFilterBuilderModule,

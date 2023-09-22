@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import {
   ITDataGridSystem,
@@ -23,7 +23,8 @@ export class ReusableListComponent {
   gridFilterValue: any;
   groupIndex: number = 0;
   popupPosition: any;
-  // currentColor = '#f05b41';
+  currentColor: string = '#f05b41';
+
   @Input() customisationOfGrid = {
     gridBackgroundColor: 'yellow',
     gridTextColor: 'black',
@@ -49,9 +50,8 @@ export class ReusableListComponent {
         e.column.dataField === this.customisationOfGrid.highlightedColumnName
       ) {
         //this should be in lowercase
-        console.log(e, 'here is event');
-        e.cellElement.style.backgroundColor =
-          this.customisationOfGrid.gridBackgroundColor;
+        console.log(this.currentColor, 'here is event');
+        e.cellElement.style.backgroundColor = this.currentColor;
         e.cellElement.style.color = this.customisationOfGrid.gridTextColor;
       }
     }

@@ -6,3 +6,16 @@
   quaerat, error laborum quo iusto quas expedita soluta nulla! Ab, dolores
   adipisci at perspiciatis minima beatae consequatur eum?
 </p>
+<div class="form">
+  <div class="dx-fieldset">
+    <div class="hero-block">
+      <div class="color-block" [style.background-color]="currentColor">
+        <!-- <div class="superhero"></div> -->
+      </div>
+      <div class="hero-color-box">
+        <dx-color-box [(value)]="currentColor" applyValueMode="instantly"
+          [inputAttr]="{ 'aria-label': 'Event Handling' }"></dx-color-box>
+      </div>
+    </div>
+  </div>
+</div>
