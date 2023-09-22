@@ -19,6 +19,18 @@
   </ng-container>
 </dx-data-grid>
 <h4>configs: {{ filterValue | json }}</h4>
-<dx-color-box [(value)]="currentColor" applyValueMode="instantly"
-  [inputAttr]="{ 'aria-label': 'Event Handling' }"></dx-color-box>
+<h1>
+  Formatting the Columns
+
+</h1>
+<div class="container">
+  <div>
+    Background color
+    <dx-color-box [(value)]="currentColor" applyValueMode="instantly"></dx-color-box>
+  </div>
+  <div>
+    Text Color
+    <dx-color-box [(value)]="currentColorText" applyValueMode="instantly"></dx-color-box>
+  </div>
+</div>
 <!-- <div class="rectangle"></div> -->

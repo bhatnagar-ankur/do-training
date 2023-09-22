@@ -13,7 +13,7 @@ import { DxDataGridComponent } from 'devextreme-angular';
   styleUrls: ['./reusable-list.component.scss'],
   providers: [EmployeeService],
 })
-export class ReusableListComponent {
+export class ReusableListComponent implements OnInit {
   @ViewChild(DxDataGridComponent, {
     static: false,
   })
@@ -24,6 +24,7 @@ export class ReusableListComponent {
   groupIndex: number = 0;
   popupPosition: any;
   currentColor: string = '#f05b41';
+  currentColorText: string = 'white';
 
   @Input() customisationOfGrid = {
     gridBackgroundColor: 'yellow',
@@ -52,9 +53,13 @@ export class ReusableListComponent {
         //this should be in lowercase
         console.log(this.currentColor, 'here is event');
         e.cellElement.style.backgroundColor = this.currentColor;
-        e.cellElement.style.color = this.customisationOfGrid.gridTextColor;
+        e.cellElement.style.color = this.currentColorText;
       }
     }
+  }
+
+  ngOnInit(): void {
+    console.log(this.currentColor);
   }
 
   replaceItemInArray = (
