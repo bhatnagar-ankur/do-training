@@ -49,7 +49,7 @@
     Background color
     <dx-color-box
       [(value)]="this.currentColor"
-      (onValueChanged)="onValueChanged($event)"
+      (onValueChanged)="onValueChanged($event, 'bgColor')"
       applyValueMode="instantly"
       type
     ></dx-color-box>
@@ -58,11 +58,21 @@
     Text Color
     <dx-color-box
       [(value)]="this.currentColorText"
+      (onValueChanged)="onValueChanged($event, 'textColor')"
       applyValueMode="instantly"
     ></dx-color-box>
   </div>
   <div>
-    <dx-button text="Apply Changes"> </dx-button>
+    Select the column you want to apply formatting
+    <dx-select-box
+      [items]="getColumns"
+      [value]="customisationOfGrid.highlightedColumnName"
+      (onValueChanged)="onSelectChange($event)"
+      #selectBox
+    ></dx-select-box>
+  </div>
+  <div>
+    <dx-button text="Apply Changes" (onClick)="doChange()"> </dx-button>
   </div>
 </div>
 

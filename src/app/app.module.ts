@@ -16,6 +16,7 @@ import {
   DxDataGridModule,
   DxFilterBuilderModule,
   DxTemplateModule,
+  DxSelectBoxModule,
 } from 'devextreme-angular';
 import { UsdInrPipe } from './pipes/usd-inr.pipe';
 
@@ -37,6 +38,7 @@ import { UsdInrPipe } from './pipes/usd-inr.pipe';
     DxButtonModule,
     DxColorBoxModule,
     DxColorBoxModule,
+    DxSelectBoxModule,
     DxDataGridModule,
     DxFilterBuilderModule,
     DxTemplateModule,
