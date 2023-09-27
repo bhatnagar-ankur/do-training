@@ -19,6 +19,9 @@ export class ReusableListComponent implements OnInit {
   })
   dataGrid!: DxDataGridComponent;
 
+  savedState = localStorage.getItem('gridState');
+  gridState = JSON.parse(this.savedState || '{}');
+
   @Input() filterValue = [];
   gridFilterValue: any;
   groupIndex: number = 0;
@@ -45,40 +48,58 @@ export class ReusableListComponent implements OnInit {
 
   @Input() groupIndexColumnName: string = '';
 
+  ngOnInit(): void {
+    // this.restoreGridState();
+    console.log(this.gridState, 'init');
+  }
+
+  onValueChanged(e: any) {
+    this.currentColor = e.value;
+    this.saveGridState();
+  }
+
   onCellPrepared(e: any) {
+    const savedState = JSON.parse(localStorage.getItem('gridColor') as string);
+    //const gridState = JSON.parse(savedState || '{}');
+    let bgColorFromState = '';
+    let textColorFromState = '';
+    if (savedState?.customization) {
+      bgColorFromState = savedState.customization.backgroundColor;
+      textColorFromState = savedState.customization.textColor;
+      this.currentColor = bgColorFromState;
+      this.currentColorText = textColorFromState;
+    }
     if (e.rowType === 'data') {
       if (
         e.column.dataField === this.customisationOfGrid.highlightedColumnName
       ) {
-        //this should be in lowercase
-        console.log(this.currentColor, 'here is event');
-        e.cellElement.style.backgroundColor = this.currentColor;
-        e.cellElement.style.color = this.currentColorText;
+        e.cellElement.style.backgroundColor = bgColorFromState; // this.currentColor;
+        e.cellElement.style.color = textColorFromState; // this.currentColorText;
       }
+      console.log(this.currentColor);
     }
   }
 
-  ngOnInit(): void {
-    console.log(this.currentColor);
+  saveGridState() {
+    const gridState =
+      JSON.parse(localStorage.getItem('gridColor') as string) || {};
+    gridState.customization = {
+      backgroundColor: this.currentColor,
+      textColor: this.currentColorText,
+    };
+    localStorage.setItem('gridColor', JSON.stringify(gridState));
   }
-
-  replaceItemInArray = (
-    givenArray: string[] | number[],
-    oldItem: string | number,
-    newItem: string | number
-  ): string[] | number[] =>
-    givenArray.map((item: any) => (item === oldItem ? newItem : item));
 
   restoreGridState() {
     const savedState = localStorage.getItem('gridState');
-    if (this.dataGrid && savedState)
-      this.dataGrid.instance.state(JSON.parse(savedState));
-  }
-
-  saveGridState() {
-    if (this.dataGrid) {
-      const gridState = this.dataGrid.instance.state();
-      localStorage.setItem('gridState', JSON.stringify(gridState));
+    if (this.dataGrid && savedState) {
+      const gridState = JSON.parse(savedState);
+      const customization = gridState.customization;
+      if (customization) {
+        this.currentColor = customization.backgroundColor;
+        this.currentColorText = customization.textColor;
+      }
+      this.dataGrid.instance.state(gridState);
     }
   }
 }

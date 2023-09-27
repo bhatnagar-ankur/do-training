@@ -1,36 +1,69 @@
 <h2 class="content-block">{{ value }}</h2>
-<dx-data-grid [dataSource]="listData" [filterSyncEnabled]="true" [rowAlternationEnabled]="false" [width]="'100%'"
-  id="GridContainer" (onCellPrepared)="onCellPrepared($event)">
+<dx-data-grid
+  [dataSource]="listData"
+  [filterSyncEnabled]="true"
+  [rowAlternationEnabled]="false"
+  [width]="'100%'"
+  id="GridContainer"
+  (onCellPrepared)="onCellPrepared($event)"
+>
   <!-- [filterValue]="filterValue" -->
-  <dxo-editing [allowUpdating]="gridConfigs.enableEditing" [useIcons]="true" mode="row" />
+  <dxo-editing
+    [allowUpdating]="gridConfigs.enableEditing"
+    [useIcons]="true"
+    mode="row"
+  />
   <dxo-filter-panel [visible]="true" />
   <dxo-filter-row [visible]="true" />
   <dxo-group-panel [visible]="true" />
   <dxo-header-filter [visible]="true" />
-  <dxo-pager [allowedPageSizes]="gridConfigs.page" [showPageSizeSelector]="true" />
+  <dxo-pager
+    [allowedPageSizes]="gridConfigs.page"
+    [showPageSizeSelector]="true"
+  />
   <dxo-paging [pageSize]="gridConfigs.pageSize" />
-  <dxo-search-panel [highlightCaseSensitive]="true" [visible]="gridConfigs.enableSearchPanel" />
-  <dxo-state-storing [enabled]="true" type="localStorage" storageKey="gridState" />
+  <dxo-search-panel
+    [highlightCaseSensitive]="true"
+    [visible]="gridConfigs.enableSearchPanel"
+  />
+  <dxo-state-storing
+    [enabled]="true"
+    type="localStorage"
+    storageKey="gridState"
+  />
   <ng-container *ngFor="let item of getColumns">
-    <dxi-column *ngIf="item === groupIndexColumnName; else elseBlock" [dataField]="item" [groupIndex]="0" />
+    <dxi-column
+      *ngIf="item === groupIndexColumnName; else elseBlock"
+      [dataField]="item"
+      [groupIndex]="0"
+    />
     <ng-template #elseBlock>
       <dxi-column [dataField]="item" cssClass="cell-highlighted" />
     </ng-template>
   </ng-container>
 </dx-data-grid>
 <h4>configs: {{ filterValue | json }}</h4>
-<h1>
-  Formatting the Columns
-
-</h1>
+<h1>Formatting the Columns</h1>
 <div class="container">
   <div>
     Background color
-    <dx-color-box [(value)]="currentColor" applyValueMode="instantly"></dx-color-box>
+    <dx-color-box
+      [(value)]="this.currentColor"
+      (onValueChanged)="onValueChanged($event)"
+      applyValueMode="instantly"
+      type
+    ></dx-color-box>
   </div>
   <div>
     Text Color
-    <dx-color-box [(value)]="currentColorText" applyValueMode="instantly"></dx-color-box>
+    <dx-color-box
+      [(value)]="this.currentColorText"
+      applyValueMode="instantly"
+    ></dx-color-box>
+  </div>
+  <div>
+    <dx-button text="Apply Changes"> </dx-button>
   </div>
 </div>
+
 <!-- <div class="rectangle"></div> -->
