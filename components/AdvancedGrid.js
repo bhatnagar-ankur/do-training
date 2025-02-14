@@ -92,7 +92,8 @@ const AdvancedGrid = () => {
         <DataGrid
           rows={filteredRows}
           columns={columns}
-          pageSize={5}
+          pageSize={10}
+          rowsPerPageOptions={[10, 15, 20, 25]}
           checkboxSelection
           disableSelectionOnClick
           sortingOrder={['asc', 'desc']}

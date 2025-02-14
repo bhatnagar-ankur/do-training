@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Link from 'next/link';
-
+import AuthContext from "@/context/AuthContext";
 export default function FormPage() {
+  const {login}=useContext(AuthContext)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -85,9 +86,9 @@ export default function FormPage() {
 
     if (name === "phone") {
       const formattedValue = value
-        .replace(/\D/g, '') // Remove non-numeric characters
-        .slice(0, 10) // Ensure the length doesn't exceed 10 digits
-        .replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3"); // Format as XXX XXX XXXX
+        .replace(/\D/g, '') 
+        .slice(0, 10) 
+        .replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3"); 
       setFormData({ ...formData, [name]: formattedValue });
     } else {
       setFormData({ ...formData, [name]: value });

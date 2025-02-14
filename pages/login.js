@@ -1,31 +1,14 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { useState, useContext } from "react";
 import Link from 'next/link';
+import AuthContext from "@/context/AuthContext";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const router = useRouter();
-
+    const { login } = useContext(AuthContext); 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        
-        const users = JSON.parse(localStorage.getItem("users")) || [];
-        const user = users.find(user => user.email === username && user.password === password);
-
-        if (user) {
-            
-            localStorage.setItem("loggedInUser", JSON.stringify(user));
-
-           
-            router.push({
-                pathname: "/home",
-                query: { role: user.role },
-            });
-        } else {
-            alert("Invalid credentials");
-        }
+        login(username, password);
     };
 
     return (

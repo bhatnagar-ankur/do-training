@@ -48,34 +48,36 @@ const DataGrid = ({ columns, data }) => {
           ))}
         </select>
       </div>
-      <table className="min-w-full bg-white border">
-        <thead>
-          <tr>
-            {columns.map((col) => (
-              <th
-                key={col.header}
-                className="py-2 px-4 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-              >
-                {col.header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.map((row, rowIndex) => (
-            <tr key={rowIndex} className="border-b">
-              {columns.map((col, colIndex) => (
-                <td
-                  key={colIndex}
-                  className="py-2 px-4 border-b border-gray-300 text-sm text-gray-900"
+      <div style={{ height: '400px', overflowY: 'auto' }} className="bg-white border rounded"> 
+        <table className="min-w-full bg-white border " style={{ width: '100%', tableLayout: 'fixed' }}>
+          <thead>
+            <tr>
+              {columns.map((col) => (
+                <th
+                  key={col.header}
+                  className="py-2 px-4 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
                 >
-                  {row[col.accessor]}
-                </td>
+                  {col.header}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredData.map((row, rowIndex) => (
+              <tr key={rowIndex} className="border-b">
+                {columns.map((col, colIndex) => (
+                  <td
+                    key={colIndex}
+                    className="py-2 px-4 border-b border-gray-300 text-sm text-gray-900"
+                  >
+                    {row[col.accessor]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

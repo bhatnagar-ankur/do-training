@@ -1,39 +1,33 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
+import AuthContext from '@/context/AuthContext';
 
 const withAuth = (WrappedComponent) => {
-    const WithAuthComponent = (props) => {
-        const [isAuthenticated, setIsAuthenticated] = useState(false);
-        const router = useRouter();
+  const WithAuthComponent = (props) => {
+    const { user, loading } = useContext(AuthContext);
+    const router = useRouter();
 
-        useEffect(() => {
-            const loggedInUser = localStorage.getItem('loggedInUser'); 
+    useEffect(() => {
+      if (!user && !loading) {
+        router.push('/login');
+      }
+    }, [user, loading, router]);
 
-            if (!loggedInUser) {
-                router.push('/login');
-            } else {
-                setIsAuthenticated(true);
-            }
-        }, [router]);
+    if (loading || !user) {
+      return <div>Loading...</div>;
+    }
 
-        if (!isAuthenticated) {
-            return null; 
-        }
+    return <WrappedComponent {...props} />;
+  };
 
-        return <WrappedComponent {...props} />;
-    };
+  WithAuthComponent.displayName = `WithAuth(${getDisplayName(WrappedComponent)})`;
 
- 
-    WithAuthComponent.displayName = `WithAuth(${getDisplayName(WrappedComponent)})`;
-
-    return WithAuthComponent;
+  return WithAuthComponent;
 };
 
-
 const getDisplayName = (WrappedComponent) => {
-    return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 };
 
 export default withAuth;
-

@@ -37,24 +37,42 @@ const Dashboard = ({ userRole }) => {
   ];
 
   return (
-    <HomeLayout userRole={userRole}>
+    <HomeLayout>
       <div className="p-6">
         <h1 className="text-3xl font-semibold text-gray-800 mb-6">Dashboard</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+ 
           <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Card Title 1</h2>
-            <p className="text-gray-600">This is a description1</p>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">Monthly Sales</h2>
+            <p className="text-gray-600">Track your monthly sales performance.</p>
+            <ul className="list-disc list-inside text-gray-600 mt-2">
+              <li>Total Sales: $10,000</li>
+              <li>Target: $15,000</li>
+            </ul>
+            <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">View Details</button>
           </div>
+      
           <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Card Title 2</h2>
-            <p className="text-gray-600">This is a description2</p>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">New Users</h2>
+            <p className="text-gray-600">Get insights into new user registrations.</p>
+            <ul className="list-disc list-inside text-gray-600 mt-2">
+              <li>This Month: 150</li>
+              <li>Previous Month: 100</li>
+            </ul>
+            <button className="mt-4 px-4 py-2 bg-green-500 text-white rounded">Explore</button>
           </div>
+       
           <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Card Title 3</h2>
-            <p className="text-gray-600">This is a description3</p>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">Revenue Report</h2>
+            <p className="text-gray-600">Analyze  revenue streams.</p>
+            <ul className="list-disc list-inside text-gray-600 mt-2">
+              <li>Q1: $50,000</li>
+              <li>Q2: $45,000</li>
+            </ul>
+            <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded">Download Report</button>
           </div>
         </div>
-    
+        
         <div className="mt-6">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Data Grid</h2>
           <DataGrid columns={columns} data={data} />
