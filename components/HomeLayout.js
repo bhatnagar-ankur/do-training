@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { FaTachometerAlt, FaUser, FaCog } from "react-icons/fa";
+import { FaTachometerAlt, FaUser, FaCog, FaClipboardList } from "react-icons/fa";
 import { useRouter } from "next/router";
 import withAuth from "./hoc/withAuth";
 import UserDropdown from "./UserDropdown";
@@ -36,7 +36,9 @@ const HomeLayout = ({ children }) => {
           <UserDropdown user={user} handleLogout={handleLogout} />
         </div>
       </nav>
+
       <div className="flex flex-1 pt-16">
+
         <aside className="bg-gray-800 text-white w-64 p-4 shadow-lg fixed top-16 bottom-0 h-screen">
           <ul>
             <li className="flex items-center mb-4">
@@ -47,6 +49,10 @@ const HomeLayout = ({ children }) => {
               <FaUser className="mr-3" />
               <Link href="/home/profile" className="hover:text-gray-300">Profile</Link>
             </li>
+            <li className="flex items-center mb-4">
+              <FaClipboardList className="mr-3" />
+              <Link href="/home/todo" className="hover:text-gray-300">Tasks</Link>
+            </li>
             {user.role === "admin" && (
               <li className="flex items-center mb-4">
                 <FaCog className="mr-3" />
@@ -55,8 +61,10 @@ const HomeLayout = ({ children }) => {
             )}
           </ul>
         </aside>
-        <main className="flex-grow bg-gray-100 ml-64 p-6 overflow-hidden h-screen pt-16">
-          {children}
+
+       
+        <main className="flex-grow bg-gray-100 ml-64 p-6 overflow-auto h-screen pt-16">
+          {children} 
         </main>
       </div>
     </div>
