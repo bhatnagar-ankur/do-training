@@ -1,8 +1,9 @@
 import { useState, useContext } from "react";
 import Link from 'next/link';
 import AuthContext from "@/context/AuthContext";
+
 export default function FormPage() {
-  const {login}=useContext(AuthContext)
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -41,7 +42,7 @@ export default function FormPage() {
       case "phone":
         if (!value.trim()) {
           newErrors.phone = "Phone number is required.";
-        } else if (!/^\d{10}$/.test(value)) {
+        } else if (!/^\d{10}$/.test(value.replace(/\D/g, ''))) {
           newErrors.phone = "Phone number must be 10 digits.";
         } else {
           delete newErrors.phone;
@@ -51,10 +52,10 @@ export default function FormPage() {
       case "password":
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         const strength = value.length < 8 ? "Too short" :
-                         !value.match(/[a-z]/) ? "Add a lowercase letter" :
-                         !value.match(/[A-Z]/) ? "Add an uppercase letter" :
-                         !value.match(/\d/) ? "Add a digit" :
-                         !value.match(/[@$!%*?&]/) ? "Add a special character" : "Strong";
+          !value.match(/[a-z]/) ? "Add a lowercase letter" :
+          !value.match(/[A-Z]/) ? "Add an uppercase letter" :
+          !value.match(/\d/) ? "Add a digit" :
+          !value.match(/[@$!%*?&]/) ? "Add a special character" : "Strong";
         setPasswordStrength(strength);
 
         if (!value.trim()) {
@@ -67,7 +68,9 @@ export default function FormPage() {
         break;
 
       case "confirmPassword":
-        if (value !== formData.password) {
+        if (!value.trim()) {
+          newErrors.confirmPassword = "Confirm Password is required.";
+        } else if (value !== formData.password) {
           newErrors.confirmPassword = "Passwords do not match.";
         } else {
           delete newErrors.confirmPassword;
@@ -100,18 +103,23 @@ export default function FormPage() {
   const validateForm = () => {
     let newErrors = {};
 
+    // Validate all fields
     Object.keys(formData).forEach((key) => {
       validateField(key, formData[key]);
     });
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; 
+    return Object.keys(newErrors).length === 0; // Return true if no errors
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) return; 
+    // Validate the form before submission
+    if (!validateForm()) {
+      alert("Please fill all required fields correctly.");
+      return;
+    }
 
     try {
       const users = JSON.parse(localStorage.getItem("users")) || [];
@@ -119,7 +127,7 @@ export default function FormPage() {
       localStorage.setItem("users", JSON.stringify(users));
 
       alert("Registration successful!");
-      setFormData({ name: "", email: "", phone: "", country: "India", password: "", confirmPassword: "" ,role: "user"});
+      setFormData({ name: "", email: "", phone: "", country: "India", password: "", confirmPassword: "", role: "user" });
       setErrors({});
       setPasswordStrength("");
     } catch (error) {
@@ -208,6 +216,7 @@ export default function FormPage() {
             />
             {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
           </div>
+
           <div>
             <label className="block text-gray-700 font-medium">Role:</label>
             <select
@@ -227,7 +236,6 @@ export default function FormPage() {
           >
             Submit
           </button>
-
         </form>
         <p className="text-center mt-4">
           <Link href="/login" className="text-blue-500 hover:underline">
