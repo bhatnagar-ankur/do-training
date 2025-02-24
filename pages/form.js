@@ -82,6 +82,7 @@ export default function FormPage() {
     }
 
     setErrors(newErrors);
+    return newErrors; 
   };
 
   const handleChange = (e) => {
@@ -103,20 +104,21 @@ export default function FormPage() {
   const validateForm = () => {
     let newErrors = {};
 
-    // Validate all fields
+
     Object.keys(formData).forEach((key) => {
-      validateField(key, formData[key]);
+      const fieldErrors = validateField(key, formData[key]);
+      newErrors = { ...newErrors, ...fieldErrors }; 
     });
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Return true if no errors
+    return Object.keys(newErrors).length === 0; 
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate the form before submission
-    if (!validateForm()) {
+    const isValid = validateForm();
+    if (!isValid) {
       alert("Please fill all required fields correctly.");
       return;
     }

@@ -28,7 +28,7 @@ const HomeLayout = ({ children }) => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen overflow-hidden">
       <nav className="border-b border-gray-700 bg-gray-800 w-full p-4 flex items-center justify-between shadow-md fixed top-0 z-50">
         <h1 className="text-2xl font-semibold text-white">NEXTAPP</h1>
         <div className="flex space-x-6">

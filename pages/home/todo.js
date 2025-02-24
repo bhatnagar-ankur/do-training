@@ -69,24 +69,35 @@ const TodoPage = () => {
     if (!result.destination) return;
 
     const { source, destination } = result;
+
+  
     if (source.droppableId === destination.droppableId && source.index === destination.index) return;
 
     const sourceTasks = Array.from(tasks[source.droppableId]);
     const [movedTask] = sourceTasks.splice(source.index, 1);
 
-    const destinationTasks = Array.from(tasks[destination.droppableId]);
-    destinationTasks.splice(destination.index, 0, movedTask);
+    if (source.droppableId === destination.droppableId) {
 
-    setTasks((prev) => ({
-      ...prev,
-      [source.droppableId]: sourceTasks,
-      [destination.droppableId]: destinationTasks,
-    }));
+      sourceTasks.splice(destination.index, 0, movedTask);
+      setTasks((prev) => ({
+        ...prev,
+        [source.droppableId]: sourceTasks,
+      }));
+    } else {
+   
+      const destinationTasks = Array.from(tasks[destination.droppableId]);
+      destinationTasks.splice(destination.index, 0, movedTask);
+      setTasks((prev) => ({
+        ...prev,
+        [source.droppableId]: sourceTasks,
+        [destination.droppableId]: destinationTasks,
+      }));
+    }
   };
 
   return (
     <HomeLayout>
-      <div className="p-6 bg-gray-100 min-h-screen font-sans">
+      <div className="p-6 bg-gray-100 min-h-screen font-sans ">
         <h2 className="text-3xl font-bold text-center mb-6 text-indigo-600">Task Board</h2>
 
         <div className="flex justify-center mb-4">
