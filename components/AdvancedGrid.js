@@ -9,7 +9,7 @@ const columns = [
   { field: 'age', headerName: 'Age', width: 110 },
   { field: 'email', headerName: 'Email', width: 200 },
 ];
-
+z
 const rows = [
   { id: 1, name: 'Anjali Sharma', age: 25, email: 'anjali.sharma@example.com' },
   { id: 2, name: 'Ravi Kumar', age: 32, email: 'ravi.kumar@example.com' },
