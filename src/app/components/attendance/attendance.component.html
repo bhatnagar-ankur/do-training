@@ -1,0 +1,34 @@
+<div class="attendance-wrapper">
+  <div class="attendance-card">
+    <h2 class="table-title">Attendance Records</h2>
+
+
+    <app-search-input 
+      [placeholder]="'Search by Employee Name...'" 
+      (searchChange)="searchTerm = $event; updatePagination()">
+    </app-search-input>
+
+
+    <app-dynamic-table [columns]="attendanceColumns" [data]="paginatedData"></app-dynamic-table>
+
+    <div class="pagination">
+      <app-custom-button 
+        label="Previous" 
+        color="secondary" 
+        size="medium" 
+        (buttonClick)="prevPage()" 
+        [disabled]="currentPage === 1">
+      </app-custom-button>
+
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+
+      <app-custom-button 
+        label="Next" 
+        color="primary" 
+        size="medium" 
+        (buttonClick)="nextPage()" 
+        [disabled]="currentPage === totalPages">
+      </app-custom-button>
+    </div>
+  </div>
+</div>

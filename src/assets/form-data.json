@@ -1,0 +1,59 @@
+{
+  "fields": [
+    {
+      "label": "Employee ID",
+      "type": "number",
+      "name": "employeeId",
+      "required": true
+    },
+    {
+      "label": "First Name",
+      "type": "text",
+      "name": "firstName",
+      "required": true
+    },
+    {
+      "label": "Last Name",
+      "type": "text",
+      "name": "lastName",
+      "required": true
+    },
+    {
+      "label": "Email",
+      "type": "email",
+      "name": "email",
+      "required": true
+    },
+    {
+      "label": "Date of Birth",
+      "type": "date",
+      "name": "dob",
+      "required": true
+    },
+    {
+      "label": "Start Date",
+      "type": "date",
+      "name": "startDate",
+      "required": true
+    },
+    {
+      "label": "Department",
+      "type": "select",
+      "name": "department",
+      "options": ["Management", "Developer", "Testing", "Finance"],
+      "required": true
+    },
+    {
+      "label": "Password",
+      "type": "password",
+      "name": "password",
+      "required": true
+    },
+    {
+      "label": "Confirm Password",
+      "type": "password",
+      "name": "confirmPassword",
+      "required": true
+    }
+  ]
+}

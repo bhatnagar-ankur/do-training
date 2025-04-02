@@ -1,0 +1,48 @@
+<div class="settings-wrapper">
+    <h2>Account Settings</h2>
+  
+    <div class="settings-card">
+      <h3>Profile Information</h3>
+      <label>Name</label>
+      <input type="text" [(ngModel)]="name" placeholder="Enter your name">
+  
+      <label>Email</label>
+      <input type="email" [(ngModel)]="email" placeholder="Enter your email">
+  
+      <button (click)="updateProfile()">Save Changes</button>
+    </div>
+  
+    <div class="settings-card">
+      <h3>Change Password</h3>
+      <label>Current Password</label>
+      <input type="password" [(ngModel)]="currentPassword" placeholder="Current password">
+  
+      <label>New Password</label>
+      <input type="password" [(ngModel)]="newPassword" placeholder="New password">
+  
+      <label>Confirm Password</label>
+      <input type="password" [(ngModel)]="confirmPassword" placeholder="Confirm new password">
+  
+      <button (click)="updatePassword()">Update Password</button>
+    </div>
+  
+    <div class="settings-card">
+      <h3>Notification Preferences</h3>
+      <label>
+        <input type="checkbox" [(ngModel)]="emailNotifications">
+        Receive Email Notifications
+      </label>
+      <label>
+        <input type="checkbox" [(ngModel)]="smsNotifications">
+        Receive SMS Notifications
+      </label>
+      <button (click)="savePreferences()">Save Preferences</button>
+    </div>
+  
+    <div class="settings-card delete-account">
+      <h3>Delete Account</h3>
+      <p>Warning: This action is irreversible!</p>
+      <button class="delete-btn" (click)="deleteAccount()">Delete My Account</button>
+    </div>
+  </div>
+  

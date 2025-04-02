@@ -1,0 +1,105 @@
+.timesheet-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.01);
+}
+
+.timesheet-form {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+}
+
+.timesheet-card, .total-hours-card {
+  background: #f4f4f4;
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+
+.day-slot {
+  background: #283593;
+  color: white;
+  padding: 12px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.day-slot:hover {
+  background: #1a237e;
+  transform: scale(1.05);
+}
+
+.hours {
+  display: block;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+max-width: 100%;
+margin:30px;;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.work-slot {
+  display: flex;
+  gap: 15px;
+}
+
+.work-slot .form-group {
+  flex: 1;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px;
+}
+
+button[type="submit"] {
+  background: #283593;
+  color: white;
+}
+
+button[type="button"] {
+  background: #ccc;
+}

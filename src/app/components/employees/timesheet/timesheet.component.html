@@ -1,0 +1,72 @@
+<div class="timesheet-container">
+  <h2>Weekly Timesheet</h2>
+
+  <div class="timesheet-card">
+    <h3>Weekly Work Log</h3>
+    <div class="week-grid">
+      <div *ngFor="let day of weekdays; let i = index" class="day-slot" (click)="openForm(i)">
+        <span>{{ day }}</span>
+        <span class="hours">{{ timesheetEntries.controls[i].get('hoursWorked')?.value || '00:00' }} hrs</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="total-hours-card">
+    <h3>Total Weekly Hours: {{ totalWeekHours }} hrs</h3>
+  </div>
+
+  <div *ngIf="selectedDayIndex !== null" class="timesheet-form">
+    <h3>Timesheet Entry - {{ weekdays[selectedDayIndex] }}</h3>
+    <form [formGroup]="getSelectedDayForm()" (ngSubmit)="onSubmit()">
+      
+      <div class="form-group">
+        <label>Project Name:</label>
+        <input type="text" formControlName="project">
+      </div>
+
+      <div class="form-group">
+        <label>Client Name:</label>
+        <input type="text" formControlName="client">
+      </div>
+
+      <div class="form-group">
+        <label>Work Mode:</label>
+        <select formControlName="workMode">
+          <option value="Office">Office</option>
+          <option value="WFH">WFH</option>
+          <option value="Hybrid">Hybrid</option>
+          <option value="Client Location">Client Location</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Task Description:</label>
+        <textarea formControlName="taskDescription"></textarea>
+      </div>
+
+      <div class="work-slot">
+        <div class="form-group">
+      
+          <label>In Time:</label>
+          <input type="time" formControlName="inTime" (change)="calculateHours(selectedDayIndex)">
+        </div>
+
+        <div class="form-group">
+          <label>Off Time:</label>
+          <input type="time" formControlName="offTime" (change)="calculateHours(selectedDayIndex)">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Hours Worked:</label>
+        <input type="text" formControlName="hoursWorked" readonly>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" [disabled]="getSelectedDayForm().invalid">Submit</button>
+        <button type="button" (click)="closeForm()">Cancel</button>
+      </div>
+      
+    </form>
+  </div>
+</div>

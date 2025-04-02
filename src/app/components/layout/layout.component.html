@@ -1,0 +1,55 @@
+<div class="layout-container">
+
+  <nav class="sidebar">
+    <div class="logo">Track App</div>
+    <ul>
+      <li routerLink="/dashboard" routerLinkActive="active">Dashboard</li>
+
+      <li class="menu-header">Employees</li>
+      <li routerLink="/employee-list" routerLinkActive="active">Manage Employees</li>
+      <li routerLink="/timesheet" routerLinkActive="active">Timesheet</li>
+      <li routerLink="/leave-requests" routerLinkActive="active">Leave Requests</li>
+
+      <li class="menu-header">Projects</li>
+      <li routerLink="/projects" routerLinkActive="active">My Projects</li>
+      <li routerLink="/reports" routerLinkActive="active">Reports</li>
+
+      <li class="menu-header">Attendance</li>
+      <li routerLink="/attendance" routerLinkActive="active">Check-in / Check-out</li>
+
+      <li class="menu-header">Settings</li>
+      <li routerLink="/settings" routerLinkActive="active">Account Settings</li>
+
+      <li class="menu-header">Support</li>
+      <li routerLink="/support" routerLinkActive="active">Help & Support</li>
+    </ul>
+  </nav>
+
+  
+  <div class="main-content">
+   
+    <header class="navbar">
+     
+      <span class="app-title"></span> 
+      
+      <div class="nav-icons">
+        <span class="notification-icon">🔔</span>
+
+       
+        <div class="profile-dropdown">
+          <button class="profile-btn">👤 My Profile</button>
+          <div class="dropdown-content">
+            <a routerLink="/profile">View Profile</a>
+            <a routerLink="/settings">Settings</a>
+            <a (click)="logout()">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+   
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="employee-list-container">
+  <div class="employee-card">
+    <mat-card-header>
+      <mat-card-title>Employee List</mat-card-title>
+    </mat-card-header>
+
+    <mat-form-field>
+      <input matInput [(ngModel)]="searchQuery" (input)="applyFilter()" placeholder="Search Employee">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select [(ngModel)]="selectedDepartment" (selectionChange)="applyFilter()" placeholder="Select Department">
+        <mat-option *ngFor="let dept of departments" [value]="dept">{{ dept }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-button (click)="clearFilters()">Clear Filters</button>
+
+    <div *ngIf="isNoRecordsFound()" class="no-records">
+      <p>No records found.</p>
+    </div>
+
+    <app-dynamic-table [columns]="employeeColumns" [data]="filteredEmployees"></app-dynamic-table>
+  </div>
+</div>

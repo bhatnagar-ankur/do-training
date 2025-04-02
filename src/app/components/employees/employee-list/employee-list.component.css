@@ -1,0 +1,17 @@
+.employee-list-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.filter-container {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.sort-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}

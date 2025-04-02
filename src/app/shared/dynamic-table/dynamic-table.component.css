@@ -1,0 +1,33 @@
+.table-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+.no-records {
+  text-align: center;
+  font-weight: bold;
+  color: #888;
+}
+
+tbody tr {
+  height: 40px; 
+}
+
+tbody tr:has(td:empty) {
+  visibility: hidden; 
+}

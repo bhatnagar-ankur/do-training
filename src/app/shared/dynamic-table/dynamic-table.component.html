@@ -1,0 +1,17 @@
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns">{{ column }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="data.length === 0">
+        <td [attr.colspan]="columns.length" class="no-records">No records found</td>
+      </tr>
+      <tr *ngFor="let row of getDisplayedRows(); let i = index">
+        <td *ngFor="let column of columns">{{ row[column] }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
