@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Night Planner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #ede2fc;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #6a0dad;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input,
+        button,
+        select {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 6px;
+            border: 1px solid gray;
+        }
+
+        button {
+            background-color: #6a0dad;
+            color: white;
+            cursor: pointer;
+            border: 1px solid gray;
+        }
+
+        .delete-btn {
+            cursor: pointer;
+            float: right;
+            font-weight: bold;
+        }
+
+        #planner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .search-bar input {
+            width: 60%;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 6px;
+            border: 1px solid gray;
+            font-size: 16px;
+        }
+
+        .movie-card {
+            background: white;
+            width: 200px;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .movie-card:hover {
+            transform: scale(2);
+        }
+
+        #title {
+            color: #6a0dad;
+        }
+
+        .movie-name {
+            color: #6a0dad;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>❤️ Movie Night Planner ❤️</h1>
+
+    <!-- for moive details input -->
+    <form id="movieForm">
+        <input type="text" id="title" placeholder="🎦 Movie Title" required>
+        <input type="text" id="director" placeholder="🧑🏻‍💻 Director" required>
+        <input type="number" id="rating" placeholder="Rating" min="0" max="10" required>
+        <button type="submit">➕Add Movie</button>
+    </form>
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="🔎 Search movie name..">
+    </div>
+    <!-- for filtering -->
+    <div class="filter">
+        <label for="minRating">Filter Accourding to Ratings:</label>
+        <select id="minRating">
+            <option value="0">All</option>
+            <option value="5">5+</option>
+            <option value="7">7+</option>
+            <option value="9">9+</option>
+        </select>
+    </div>
+
+    <div id="planner"></div>
+
+    <script>
+        // parent(Base) class
+        class MediaItem {
+            constructor(id, title) {
+                this.id = id;
+                this.title = title;
+            }
+
+            getCardHTML() { // return to HtML 
+                return `
+                    <div class="movie-card">
+                        <h3>${this.title}</h3>
+                    </div>
+                `;
+            }
+        }
+
+        // Movie class extending MediaItem
+        class Movie extends MediaItem {  // inherits id, title from parent
+            constructor(id, title, director, rating) {
+                super(id, title);
+                this.director = director; // adding diector and rating
+                this.rating = rating;
+            }
+
+            getCardHTML() { // this overrides before to show more information 
+                return `
+                    <div class="movie-card" data-id="${this.id}">
+                        <span class="delete-btn" data-id="${this.id}" >❌</span>
+                        <h3 id="title">${this.title}</h3> 
+                        <p><b>Director:</b> ${this.director}</p>
+                        <p><b>Rating:</b> ${this.rating}/10</p> 
+                    </div>
+                `;
+            }
+        }
+
+        let watchlist = []; // all the details will store in this in local storage
+        let id = 1; // id will starts from 1
+
+        function loadWatchlist() { // this helps us to load the data from local storage
+            const saved = localStorage.getItem("watchlist");
+            if (saved) {
+                const parsed = JSON.parse(saved);// local storage won't save objects(arrays) so we r converting into string
+                watchlist = parsed.map(m => new Movie(m.id, m.title, m.director, m.rating));
+                if (watchlist.length > 0) {
+                    id = Math.max(...watchlist.map(m => m.id)) + 1; // setiing the id 
+                }
+            }
+        }
+
+        function saveWatchlist() {  // loads the data into watchlist(local storage)
+            localStorage.setItem("watchlist", JSON.stringify(watchlist));
+        }
+
+        function addMovie(movieData) {  // adding each movie details
+            let movie = new Movie(id++, movieData.title, movieData.director, movieData.rating);
+            watchlist.push(movie);
+            saveWatchlist();
+        }
+
+
+        function filterByRating(minRating) { // for filtering
+            return watchlist.filter(m => m.rating >= minRating);
+        }
+
+        function renderWatchlist(list) {
+            const planner = document.getElementById("planner");
+            planner.innerHTML = "";
+
+            list.forEach(movie => {
+                planner.innerHTML += movie.getCardHTML();
+            });
+            document.querySelectorAll(".delete-btn").forEach(btn => { // to remove any movie by clicking on the symbol
+                btn.addEventListener("click", function () {
+                    const movieId = parseInt(this.getAttribute("data-id"));
+                    deleteMovie(movieId); //// entire movie with id it will get remove
+                });
+            });
+        }
+
+        document.getElementById("movieForm").addEventListener("submit", function (add) { // handles the submission
+            add.preventDefault();
+
+            const title = document.getElementById("title").value;
+            const director = document.getElementById("director").value;
+            const rating = parseFloat(document.getElementById("rating").value);
+
+            addMovie({ title, director, rating }); // callling addMovie function and giving arguments 
+            renderWatchlist(watchlist);
+
+            add.target.reset();
+        });
+
+        function searchMovies(query) { //search with movie name
+            query = query.toLowerCase();
+            return watchlist.filter(m => m.title.toLowerCase().includes(query));
+        }
+
+        document.getElementById("searchInput").addEventListener("input", function () { // takes the movie name and serch's inside the renderwatchList
+            const query = this.value;
+            const results = searchMovies(query);
+            renderWatchlist(results);
+        });
+
+        document.getElementById("minRating").addEventListener("change", function () { // according to the filter change it will give the movie 
+            const minRating = parseInt(this.value);
+            const filtered = filterByRating(minRating);
+            renderWatchlist(filtered);
+        });
+    
+        function deleteMovie(id) {  // to delete 
+            watchlist = watchlist.filter(m => m.id !== id);
+            saveWatchlist();
+            renderWatchlist(watchlist);
+        }
+
+        loadWatchlist();
+        renderWatchlist(watchlist);
+    </script>
+</body>
+
+</html>
