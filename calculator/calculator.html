@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>calculator</title>
+    <style>
+    html{
+    box-sizing: border-box;
+}
+div{
+    border: 1px solid;
+    padding: 20px;
+    background-color: rgb(170, 158, 181);
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    border: 1px solid;
+    background-color: bisque;
+}
+ h1
+ {
+    font-size: medium;
+    font-style: oblique;
+   
+   
+ }
+form{
+    text-align: center;
+   
+   
+   
+}
+ .container
+ {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap:10px;
+    margin-top: 5px;
+    border: 1px solid black;
+    padding: 20px;
+    background-color: aquamarine;
+ 
+ 
+ }
+ 
+ button:hover{
+    background-color: rgb(157, 46, 46);
+ }
+ 
+ .operand
+ {
+    border-radius: 5px;
+ }
+ 
+ .operator
+ {
+    border-radius: 10px;
+ }
+ 
+ .equal
+ {
+    grid-column-start: 3;
+  grid-column-end: 4;
+}
+    </style>
+    </head>
+   
+   <body>
+   
+    <div>
+        <h1>SIMPLE CALCULATOR</h1>
+        <form>
+                    <input type="text" id="res" placeholder="0" readonly>
+ 
+           
+        </form>
+       
+        <div class="container">
+       <button class="operator" onclick="clearResult()">C</button>
+ 
+<button class="operator" onclick="input('%')">%</button>
+<button class="operator" onclick="input('/')">÷</button>
+<button class="operator" onclick="input('*')">×</button>
+ 
+<button class="operand" onclick="input('7')">7</button>
+<button class="operand" onclick="input('8')">8</button>
+<button class="operand" onclick="input('9')">9</button>
+<button class="operator" onclick="input('-')">−</button>
+ 
+<button class="operand" onclick="input('4')">4</button>
+<button class="operand" onclick="input('5')">5</button>
+<button class="operand" onclick="input('6')">6</button>
+<button class="operator" onclick="input('+')">+</button>
+ 
+<button class="operand" onclick="input('1')">1</button>
+<button class="operand" onclick="input('2')">2</button>
+<button class="operand" onclick="input('3')">3</button>
+<button class="operator" onclick="calculate()">=</button>
+ 
+<button class="operand" onclick="input('0')">0</button>
+<button class="operand" onclick="input('.')">.</button>
+<button class="operator" onclick="del()">Del</button>
+<button class="operand" onclick="input('00')">00</button>
+ 
+ 
+ 
+    </div>
+  </div>
+<script>
+    function input(value) {
+  document.getElementById("res").value += value;
+}
+ 
+function clearResult() {
+  document.getElementById("res").value = "";
+}
+ 
+function del() {
+  let res = document.getElementById("res");
+  res.value = res.value.slice(0, -1);
+}
+ function calculate() {
+  let expression = document.getElementById("res").value;
+  let tokens = expression.match(/\d+(\.\d+)?|[+\-*/%]/g); 
+ 
+  if (!tokens) {
+    document.getElementById("res").value = "Error";
+    return;
+  }
+ 
+  let result = Number(tokens[0]);
+ 
+  for (let i = 1; i < tokens.length; i += 2) {
+    let operator = tokens[i];
+    let nextNumber = Number(tokens[i + 1]);
+ 
+    if (isNaN(nextNumber)) {
+      document.getElementById("res").value = "Error";
+      return;
+    }
+ 
+    if (operator === '+') {
+  result += nextNumber;
+} else if (operator === '-') {
+  result -= nextNumber;
+} else if (operator === '*') {
+  result *= nextNumber;
+} else if (operator === '/') {
+  if (nextNumber === 0) {
+    document.getElementById("res").value = "Error";
+    return;
+  }
+  result /= nextNumber;
+} else if (operator === '%') {
+  result %= nextNumber;
+} else {
+  document.getElementById("res").value = "Error";
+  return;
+}
+ 
+  }
+ 
+  document.getElementById("res").value = result;
+}
+</script> 
+       
+       
+ 
+ 
+ 
+ 
+ 
+   </body>
+</html>
