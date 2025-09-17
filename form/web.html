@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sample HTML Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-6">
+    <div class="max-w-45rem mx-auto bg-white p-6 rounded shadow">
+        <div class="flex gap-8">
+            <!-- Form Section -->
+            <div class="w-1/2">
+                <h1 class="text-2xl font-bold mb-6">Sample HTML Form</h1>
+                <form id="form1" class="space-y-4 bg-gray-50 p-4 rounded shadow-sm">
+                    <!-- Name -->
+                    <div>
+                        <label for="text" class="block mb-1 font-medium">Name:</label>
+                        <input type="text" id="text" name="name" placeholder="Scrooge McDuck"
+                            class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block mb-1 font-medium">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com"
+                            class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div>
+                        <label for="number" class="block mb-1 font-medium">Phone Number:</label>
+                        <input type="text" id="number" name="number" placeholder="10 digits phone number"
+                            class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- Telephone -->
+                    <div>
+                        <label for="tel" class="block mb-1 font-medium">Telephone:</label>
+                        <input type="tel" id="tel" name="tel" placeholder="123-456-7890"
+                            class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- URL -->
+                    <div>
+                        <label for="url" class="block mb-1 font-medium">URL:</label>
+                        <input type="url" id="url" name="url" placeholder="https://example.com"
+                            class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- Search -->
+                    <div>
+                        <label for="search" class="block mb-1 font-medium">Search:</label>
+                        <input type="search" id="search" name="search" placeholder="Sample search"
+                            class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- DOB -->
+                    <div>
+                        <label for="date" class="block mb-1 font-medium">DOB:</label>
+                        <input type="date" id="date" name="date" class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- Time -->
+                    <div>
+                        <label for="time" class="block mb-1 font-medium">Time:</label>
+                        <input type="time" id="time" name="time" class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- Datetime Local -->
+                    <div>
+                        <label for="datetime-local" class="block mb-1 font-medium">Datetime Local:</label>
+                        <input type="datetime-local" id="datetime-local" name="datetime-local"
+                            class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- Month -->
+                    <div>
+                        <label for="month" class="block mb-1 font-medium">Month:</label>
+                        <input type="month" id="month" name="month"
+                            class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- Week -->
+                    <div>
+                        <label for="week" class="block mb-1 font-medium">Week:</label>
+                        <input type="week" id="week" name="week" class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- Color -->
+                    <div>
+                        <label for="color" class="block mb-1 font-medium">Color:</label>
+                        <input type="color" id="color" name="color" class="w-full h-10 p-1 rounded">
+                    </div>
+
+                    <!-- File -->
+                    <div>
+                        <label for="file" class="block mb-1 font-medium">File:</label>
+                        <input type="file" id="file" name="file" class="w-full border-2 p-2 rounded focus:outline-none">
+                    </div>
+
+                    <!-- Gender (Radio Buttons) -->
+                    <div>
+                        <label class="block mb-1 font-medium">Gender:</label>
+                        <div class="flex gap-4">
+                            <div>
+                                <input type="radio" id="male" name="gender" value="male" class="mr-1">
+                                <label for="male">Male</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="female" name="gender" value="female" class="mr-1">
+                                <label for="female">Female</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="other" name="gender" value="other" class="mr-1">
+                                <label for="other">Other</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills (Checkboxes) -->
+                    <div>
+                        <label class="block mb-1 font-medium">Skills:</label>
+                        <div class="flex gap-4">
+                            <div>
+                                <input type="checkbox" id="html" name="skills" value="HTML" class="mr-1">
+                                <label for="html">HTML</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="css" name="skills" value="CSS" class="mr-1">
+                                <label for="css">CSS</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="js" name="skills" value="JS" class="mr-1">
+                                <label for="js">JS</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Country Select -->
+                    <div>
+                        <label for="select" class="block mb-1 font-medium">Select Country:</label>
+                        <select id="select" name="select" class="w-full border-2 p-2 rounded focus:outline-none">
+                            <option value="">Select</option>
+                            <option value="india">India</option>
+                            <option value="bangladesh">Bangladesh</option>
+                            <option value="nepal">Nepal</option>
+                            <option value="bhutan">Bhutan</option>
+                            <option value="sri-lanka">Sri Lanka</option>
+                            <option value="myanmar">Myanmar</option>
+                            <option value="china">China</option>
+                        </select>
+                    </div>
+
+                    <!-- Address -->
+                    <div>
+                        <label for="address" class="block mb-1 font-medium">Address:</label>
+                        <textarea id="address" name="address" rows="4" placeholder="Sample text here."
+                            class="w-full border-2 p-2 rounded focus:outline-none"></textarea>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex gap-4">
+                        <input type="submit" value="Submit"
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition cursor-pointer">
+                        <input type="reset" value="Reset"
+                            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition cursor-pointer">
+                    </div>
+                </form>
+            </div>
+
+            <!-- Output Sections -->
+            <div class="w-1/2 flex flex-col gap-6">
+                <!-- Errors -->
+                <div id="errorContainer" class="bg-white p-4 rounded shadow-sm">
+                    <h2 class="text-lg font-semibold mb-2">Errors</h2>
+                    <ul id="listCard" class="list-disc list-inside text-red-600"></ul>
+                </div>
+
+                <!-- Summary -->
+                <div id="summaryContainer" class="bg-white p-4 rounded shadow-sm">
+                    <h2 class="text-lg font-semibold mb-2">Summary</h2>
+                    <div id="displaySummary" class="text-green-600"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var ele = document.getElementById("listCard");
+                ele.innerHTML = "";
+                let valid = true;
+                let messages = [];
+                var section = document.getElementById("listCard");
+
+                // Validate all fields
+                const inputs = form.querySelectorAll('input');
+                inputs.forEach(input => {
+                    if (input.type === 'email') {
+                        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailPattern.test(input.value.trim())) {
+                            valid = false;
+                            messages.push("Please enter a valid email address.");
+                            input.classList.remove('border-green-500');
+                            input.classList.add('border-red-500');
+                        } else {
+                            input.classList.remove('border-red-500');
+                            input.classList.add('border-green-500');
+                        }
+                    } else if (input.type === 'url') {
+                        try {
+                            new URL(input.value.trim());
+                            input.classList.remove('border-red-500');
+                            input.classList.add('border-green-500');
+                        } catch (_) {
+                            valid = false;
+                            messages.push("Please enter a valid URL.");
+                            input.classList.remove('border-green-500');
+                            input.classList.add('border-red-500');
+                        }
+                    } else if (input.type === 'search') {
+                        if (input.value.trim()) {
+                            valid = false;
+                            messages.push("Search field cannot be empty.");
+                            input.classList.remove('border-green-500');
+                            input.classList.add('border-red-500');
+                        } else {
+                            input.classList.remove('border-red-500');
+                            input.classList.add('border-green-500');
+                        }
+                    } else if (['date', 'time', 'datetime-local', 'month', 'week'].includes(input.type)) {
+                        if (!input.value.trim()) {
+                            valid = false;
+                            messages.push(`${input.name.charAt(0).toUpperCase() + input.name.slice(1)} is required.`);
+                            input.classList.remove('border-green-500');
+                            input.classList.add('border-red-500');
+                        } else {
+                            input.classList.remove('border-red-500');
+                            input.classList.add('border-green-500');
+                        }
+                    } else if (input.type === 'color') {
+                        if (!input.value.trim()) {
+                            valid = false;
+                            messages.push("Color selection is required.");
+                            input.classList.remove('border-green-500');
+                            input.classList.add('border-red-500');
+                        } else {
+                            input.classList.remove('border-red-500');
+                            input.classList.add('border-green-500');
+                        }
+                    } else if (input.type === 'file') {
+                        if (!input.files.length) {
+                            valid = false;
+                            messages.push("Please upload a file.");
+                            input.classList.remove('border-green-500');
+                            input.classList.add('border-red-500');
+                        } else {
+                            input.classList.remove('border-red-500');
+                            input.classList.add('border-green-500');
+                        }
+                    } else if (input.type === 'radio') {
+                        if (!form.querySelector(`input[name="${input.name}"]:checked`)) {
+                            valid = false;
+                            messages.push("Please select a gender.");
+                            input.classList.remove('border-green-500');
+                            input.classList.add('border-red-500');
+                        } else {
+                            input.classList.remove('border-red-500');
+                            input.classList.add('border-green-500');
+                        }
+                    } else if (input.type === 'checkbox' && input.name === 'skills') {
+                        if (!form.querySelector('input[name="skills"]:checked')) {
+                            valid = false;
+                            if (!messages.includes('At least one skill is required.')) {
+                                messages.push('At least one skill is required.');
+                            }
+                            input.classList.remove('border-green-500');
+                            input.classList.add('border-red-500');
+                        } else {
+                            input.classList.remove('border-red-500');
+                            input.classList.add('border-green-500');
+                        }
+                    } else if (!input.value.trim() && !['radio', 'checkbox', 'file'].includes(input.type)) {
+                        valid = false;
+                        messages.push(`${input.name.charAt(0).toUpperCase() + input.name.slice(1)} is required.`);
+                        input.classList.remove('border-green-500');
+                        input.classList.add('border-red-500');
+                    }
+                });
+                // Validate select
+                const select = form.querySelector('select');
+                if (!select.value) {
+                    valid = false;
+                    messages.push('Country is required.');
+                    select.classList.remove('border-green-500');
+                    select.classList.add('border-red-500');
+                } else {
+                    select.classList.remove('border-red-500');
+                    select.classList.add('border-green-500');
+                }
+                // Validate textarea
+                const textarea = form.querySelector('textarea');
+                if (!textarea.value.trim()) {
+                    valid = false;
+                    messages.push('Address is required.');
+                    textarea.classList.remove('border-green-500');
+                    textarea.classList.add('border-red-500');
+                } else {
+                    textarea.classList.remove('border-red-500');
+                    textarea.classList.add('border-green-500');
+                }
+                if (!valid) {
+                    e.preventDefault();
+                    messages.forEach(msg => node(msg));
+                }
+                mySummary();
+                function node(value) {
+                    var node1 = document.createElement("li");
+                    node1.textContent = value;
+                    ele.appendChild(node1);
+                }
+            });
+            function mySummary() {
+                var summaryDiv = document.getElementById("displaySummary");
+                summaryDiv.innerHTML = "";
+                var ul = document.createElement("ul");
+                // Name
+                const name = document.getElementById("text");
+                if (name.value.trim().length >= 5 && name.value.trim().length <= 20) {
+                    const li = document.createElement("li");
+                    li.textContent = "Name: " + name.value;
+                    li.classList.add('text-green-600');
+                    ul.appendChild(li);
+                }
+                // Email
+                const email = document.getElementById("email");
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailPattern.test(email.value.trim())) {
+                    const li = document.createElement("li");
+                    li.textContent = "Email: " + email.value;
+                    li.classList.add('text-green-600');
+                    ul.appendChild(li);
+                }
+                // Phone Number
+                const number = document.getElementById("number");
+                if (number.value.trim()) {
+                    const li = document.createElement("li");
+                    li.textContent = "Phone Number: " + number.value;
+                    li.classList.add('text-green-600');
+                    ul.appendChild(li);
+                }
+                // Telephone
+                const tel = document.getElementById("tel");
+                if (tel.value.trim().length === 12) {
+                    const li = document.createElement("li");
+                    li.textContent = "Telephone: " + tel.value;
+                    li.classList.add('text-green-600');
+                    ul.appendChild(li);
+                }
+                // URL
+                const url = document.getElementById("url");
+                try {
+                    new URL(url.value.trim());
+                    const li = document.createElement("li");
+                    li.textContent = "URL: " + url.value;
+                    li.classList.add('text-green-600');
+                    ul.appendChild(li);
+                } catch (_) { }
+                // Search
+                const search = document.getElementById("search");
+                if (search.value.trim()) {
+                    const li = document.createElement("li");
+                    li.textContent = "Search: " + search.value;
+                    li.classList.add('text-green-600');
+                    ul.appendChild(li);
+                }
+                // Date of Birth
+                const date = document.getElementById("date");
+                if (date.value.trim()) {
+                    const li = document.createElement("li");
+                    li.textContent = "DOB: " + date.value;
+                    li.classList.add('text-green-600');
+                    ul.appendChild(li);
+                }
+                // Time
+                const time = document.getElementById("time");
+                if (time.value.trim()) {
+                    const li = document.createElement("li");
+                    li.textContent = "Time: " + time.value;
+                    ul.appendChild(li);
+                }
+                // Datetime Local
+                const datetimeLocal = document.getElementById("datetime-local");
+                if (datetimeLocal.value.trim()) {
+                    const li = document.createElement("li");
+                    li.textContent = "Datetime Local: " + datetimeLocal.value;
+                    li.classList.add('text-green-600');
+                    ul.appendChild(li);
+                }
+                // Month
+                const month = document.getElementById("month");
+                if (month.value.trim()) {
+                    const li = document.createElement("li");
+                    li.textContent = "Month: " + month.value;
+                    li.classList.add('text-green-600');
+                    ul.appendChild(li);
+                }
+                // Week
+                const week = document.getElementById("week");
+                if (week.value.trim()) {
+                    const li = document.createElement("li");
+                    li.textContent = "Week: " + week.value;
+                    li.classList.add('text-green-600');
+                    ul.appendChild(li);
+                }
+                // Color
+                const color = document.getElementById("color");
+                if (color.value.trim()) {
+                    const li = document.createElement("li");
+                    li.innerHTML = `Color: <span style="background-color:${color.value}; padding:0 10px;">&nbsp;&nbsp;&nbsp;</span> ${color.value}`;
+                    li.classList.add('text-green-600');
+                    ul.appendChild(li);
+                }
+                // File
+                const file = document.getElementById("file");
+                if (file.files.length > 0) {
+                    const li = document.createElement("li"); li.textContent = "File: " + file.files[0].name;
+                    li.classList.add('text-green-600'); ul.appendChild(li);
+                }
+
+                // Country
+                const select = document.getElementById("select");
+                if (select.value.trim()) {
+
+                    const li =
+
+                        document.createElement("li");
+
+                    li.textContent = "Country:"
+
+                        + select.options[select.selectedIndex].text;
+
+                    li.classList.add('text-green-600'); ul.appendChild(li);
+                }
+
+                // Address
+
+                const address = document.getElementById("address");
+
+                if (address.value.trim()) {
+
+                    const li = document.createElement("li");
+
+                    li.textContent = "Address:" + address.value;
+
+                    li.classList.add('text-green-600'); ul.appendChild(li);
+                }
+
+                // Gender
+
+                const gender = form.querySelector('input[name="gen der"]:checked');
+
+                if (gender) {
+
+                    const li = document.createElement("li");
+                    li.textContent = "Gender: " + gender.value;
+
+                    li.classList.add('text-green-600'); ul.appendChild(li);
+                }
+
+                // Skills
+
+                const skills = form.querySelectorAll('input[name="s kills"]:checked');
+
+                if (skills.length > 0) {
+                    const li = document.createElement("li");
+
+                    li.textContent = "Skills:" + Array.from(skills).map(s => s.value).join(", ");
+
+                    li.classList.add('text-green-600'); ul.appendChild(li);
+                }
+ 
+            summaryDiv.appendChild(ul);
+            }
+
+        });
+
+    </script>
+</body>
+
+</html>
