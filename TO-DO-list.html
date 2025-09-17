@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+    <style>
+        body {
+            background: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial;
+        }
+        .main {
+            width: 800px;
+            border: 2px solid black;
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 20px;
+            border: 1px solid gray;
+        }
+        button {
+            padding: 9px 12px;
+            border-radius: 6px;
+            font-size: 20px;
+            background: rgb(194,165,155);
+            margin-left: 20px;
+            cursor: pointer;
+        }
+        .boxes {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .box {
+            width: 45%;
+            min-height: 400px;
+            border: 2px solid gray;
+            border-radius: 8px;
+            padding: 8px;
+            background: #f3f0f0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: white;
+            margin: 5px 0;
+            padding: 6px;
+            border-radius: 5px;
+            cursor: grab;
+        }
+        .remove {
+            float: right;
+            color: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h2>My To Do</h2>
+        <input type="text" id="taskInput" placeholder="Enter task">
+        <button onclick="addTask()">Add</button>
+
+        <div class="boxes">
+            <!-- Tasks Section with Drop Support -->
+            <div class="box" id="actionBox" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h3>Tasks</h3>
+                <ul id="taskList"></ul>
+            </div>
+
+            <!-- Completed Section with Drop Support -->
+            <div class="box" id="doneBox" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <h3>Completed</h3>
+                <ul id="doneList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addTask() {
+            let input = document.getElementById("taskInput");
+            let txt = input.value.trim();
+            if (txt === "") return;
+
+            let li = document.createElement("li");
+            li.textContent = txt;
+            li.draggable = true;
+            li.id = "task" + Date.now();
+            li.ondragstart = drag;
+
+            let span = document.createElement("span");
+            span.innerHTML = "&#10060;";
+            span.className = "remove";
+            span.onclick = function () {
+                li.remove();
+            };
+            li.appendChild(span);
+
+            document.getElementById("taskList").appendChild(li);
+            input.value = "";
+            input.focus();
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            let id = ev.dataTransfer.getData("text");
+            let task = document.getElementById(id);
+            let targetList = ev.currentTarget.querySelector("ul");
+            if (task && targetList) {
+                targetList.appendChild(task);
+            }
+        }
+
+        // Press Enter to add task
+        document.getElementById("taskInput").addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+                addTask();
+            }
+        });
+    </script>
+</body>
+</html>
