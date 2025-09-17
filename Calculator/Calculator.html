@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="CalculatorStyle.css">
+    <script src="Calculator2.js"></script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="calculator">
+            <input type="text" id="input" placeholder="0">
+        </div>
+        <div class="operator" id="number-pad">
+            <button class="operator" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="appendToInput('%')">%</button>
+            <button class="operator" onclick="appendToInput('/')">/</button>
+            <button class="rmbtn" onclick="removefun()">DEL</button>
+        </div>
+        <div id="number-pad">
+            <button onclick="appendToInput('7')">7</button>
+            <button onclick="appendToInput('8')">8</button>
+            <button onclick="appendToInput('9')">9</button>
+            <button class="operator" onclick="appendToInput('*')">*</button>
+        </div>
+        <div id="number-pad">
+            <button onclick="appendToInput('4')">4</button>
+            <button onclick="appendToInput('5')">5</button>
+            <button onclick="appendToInput('6')">6</button>
+            <button class="operator" onclick="appendToInput('+')">+</button>
+        </div>
+        <div id="number-pad">
+            <button onclick="appendToInput('1')">1</button>
+            <button onclick="appendToInput('2')">2</button>
+            <button onclick="appendToInput('3')">3</button>
+            <button class="operator" onclick="appendToInput('-')">-</button>
+        </div>
+        <div id="number-pad">
+            <button onclick="appendToInput('00')">00</button>
+            <button onclick="appendToInput('0')">0</button>
+            <button onclick="appendToInput('.')">.</button>
+            <button class="equalbtn" onclick="calsi()">=</button>
+        </div>
+
+        <script>
+            const inputtt = document.getElementById("input");
+
+            function appendToInput(value) {
+                if (inputtt.value === "0" || inputtt.value === "Error") {
+                    inputtt.value = value;
+                } else {
+                    inputtt.value += value;
+                }
+            }
+
+            function calsi() {
+                try {
+                    const expression = inputtt.value;
+                    if (!/^[0-9+\-*/%.() ]+$/.test(expression)) {
+                        throw new Error("Invalid Expression");
+                    }
+
+                    // Regular expression to find the last operator and splitting the expression
+                    const lastOperatorIndex = Math.max(
+                        expression.lastIndexOf('+'),
+                        expression.lastIndexOf('-'),
+                        expression.lastIndexOf('*'),
+                        expression.lastIndexOf('/'),
+                        expression.lastIndexOf('%')
+                    );
+
+                    if (lastOperatorIndex === -1) {
+                        // No operator found, just a number
+                        const number = parseFloat(expression);
+                        if (isNaN(number)) {
+                            throw new Error("Invalid number");
+                        }
+                        inputtt.value = number;
+                        return;
+                    }
+
+                    const operator = expression[lastOperatorIndex];
+                    const parts = [
+                        parseFloat(expression.substring(0, lastOperatorIndex)),
+                        parseFloat(expression.substring(lastOperatorIndex + 1))
+                    ];
+
+                    let result;
+                    switch (operator) {
+                        case '+':
+                            result = add(parts[0], parts[1]);
+                            break;
+                        case '-':
+                            result = subtract(parts[0], parts[1]);
+                            break;
+                        case '*':
+                            result = multiply(parts[0], parts[1]);
+                            break;
+                        case '/':
+                            result = divide(parts[0], parts[1]);
+                            break;
+                        case '%':
+                            result = modulus(parts[0], parts[1]);
+                            break;
+                        default:
+                            throw new Error("Invalid operator");
+                    }
+
+                    if (isNaN(result) || !isFinite(result)) {
+                        throw new Error("Calculation error");
+                    }
+                    inputtt.value = result;
+
+                } catch (error) {
+                    inputtt.value = "Error";
+                }
+            }
+
+            function add(a, b) {
+                return a + b;
+            }
+
+            function subtract(a, b) {
+                return a - b;
+            }
+
+            function multiply(a, b) {
+                return a * b;
+            }
+
+            function divide(a, b) {
+                if (b === 0) {
+                    return Infinity; // Or throw an error to be caught by calsi()
+                }
+                return a / b;
+            }
+
+            function modulus(a, b) {
+                return a % b;
+            }
+        </script>
+</body>
+
+</html>
