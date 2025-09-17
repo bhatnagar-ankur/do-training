@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: pink;
+            border: 2px solid burlywood;
+        }
+        .container {
+            margin: 10px;
+            border: 2px solid #da4167;
+            background-color: #ff858d;
+             box-shadow: 5px 5px 10px rgba(0.1, 0.1, 0.1, 0.5);
+        }
+    </style>
+</head>
+<body>
+       
+        <div class="container">
+         <ul id="tasklist" style="background-color: #C1BDDB; border: 2px solid burlywood;" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <li draggable="true" id="initial_task" ondragstart="dragStart(event)">Simple task</li>
+         </ul>
+         <input type="text" id="inp1" placeholder="todolist">
+         <button id="btn" onclick="fun2()">submit<i class="fa fa-heart" style="color: blue;">&#10084;</i></button>
+        </div>
+ 
+        <div class="container">
+         <ul id="tasklist2" style="background-color: #C1BDDB; border: 2px solid burlywood;" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <li draggable="true" id="initial_task2" ondragstart="dragStart(event)">Simple task 2</li>
+         </ul>
+         <input type="text" id="inp2" placeholder="todolist 2">
+         <button id="btn2" onclick="fun3()">submit<i class="fa fa-heart" style="color: blue;">&#10084;</i></button>
+        </div>
+ 
+    <script>
+       
+ 
+       function fun2() {
+            var input1=document.getElementById("inp1");
+            var tasklist=document.getElementById("tasklist");
+            var task=input1.value.trim();
+ 
+            if(task) {
+                var lis=document.createElement("li");
+                var remove1=document.createElement("button");
+                remove1.innerHTML="Remove";
+                var icon=document.createElement("i");
+                icon.innerHTML="&#128526;"; // face icon
+ 
+                icon.style.color="red";
+                icon.style.fontSize="15px";
+                remove1.appendChild(icon);
+                remove1.style.backgroundColor="palevioletred";
+                remove1.onclick=function() {
+                    tasklist.removeChild(lis);
+                };
+ 
+                lis.textContent=task;
+ 
+                lis.appendChild(remove1);
+                tasklist.appendChild(lis);
+                input1.value="";
+ 
+                // Make new tasks draggable
+                lis.draggable = true;
+                lis.id = "task_" + Date.now(); // Unique ID for each task
+                lis.ondragstart = dragStart;
+            }
+       }
+ 
+       function fun3() {
+            var input2=document.getElementById("inp2");
+            var tasklist2=document.getElementById("tasklist2");
+            var task=input2.value.trim();
+ 
+            if(task) {
+                var lis=document.createElement("li");
+                var remove1=document.createElement("button");
+                remove1.innerHTML="Remove";
+                var icon=document.createElement("i");
+                icon.innerHTML="&#128526;"; // face icon
+ 
+                icon.style.color="red";
+                icon.style.fontSize="15px";
+                remove1.appendChild(icon);
+                remove1.style.backgroundColor="palevioletred";
+                remove1.onclick=function() {
+                    tasklist2.removeChild(lis);
+                };
+ 
+                lis.textContent=task;
+ 
+                lis.appendChild(remove1);
+                tasklist2.appendChild(lis);
+                input2.value="";
+ 
+               
+                lis.draggable = true;
+                lis.id = "task2_" + Date.now();
+                lis.ondragstart = dragStart;
+            }
+       }
+ 
+       function removefun(lis,tasklist) {
+        tasklist.removeChild(lis);
+       }
+ 
+       // Drag and Drop Functions
+       function allowDrop(ev) {
+           ev.preventDefault();
+       }
+ 
+       function dragStart(ev) {
+           ev.dataTransfer.setData("text", ev.target.id);
+       }
+ 
+       function drop(ev) {
+           ev.preventDefault();
+           var data = ev.dataTransfer.getData("text");
+           var draggedElement = document.getElementById(data);
+           
+           if (draggedElement && ev.target.tagName === "UL") {
+               ev.target.appendChild(draggedElement);
+           } else if (draggedElement && ev.target.tagName === "LI") {
+               // If dropped on another list item, insert before it
+               ev.target.parentNode.insertBefore(draggedElement, ev.target);
+           }
+       }
+ 
+    </script>
+</body>
+</html>
