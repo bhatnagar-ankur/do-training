@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title> app </title>
+      <link rel="stylesheet" href="styles.css">
+      <style>
+        
+body{
+    background-color: rgb(222, 216, 209);
+    text-align: center;
+}
+ 
+h1
+{
+    font-style: italic;
+    color: rgb(50, 66, 155);
+    text-align: center;
+   
+}
+ 
+#movie-form
+{
+    text-align: center;
+    margin: 40px;
+    padding: 10px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+#title
+{
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: rgb(33, 32, 32);
+    border: 2px solid rgb(50, 66, 155);
+    border-radius: 10px;
+    margin-right: 10px;
+    padding: 5px;
+ 
+ 
+   
+   
+}
+ 
+#director
+{
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: rgb(33, 32, 32);
+    border: 2px solid rgb(50, 66, 155);
+    border-radius: 10px;
+    margin-right: 10px;
+    padding: 5px;
+ 
+}
+ 
+#rating
+{
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 10px;
+    width:80px;
+    font-size: 15px;
+    color: rgb(33, 32, 32);
+    border: 2px solid rgb(50, 66, 155);
+    border-radius: 10px;
+    margin-right: 2px;
+    padding: 5px;
+}
+ 
+#button
+{
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(50, 66, 155);
+    border-radius: 10px;
+    margin-left: 10px;
+    padding: 5px;
+    border: 2px solid rgb(50, 66, 155);
+}
+ 
+ 
+#min
+{
+    font-style: italic;
+    font-size: 20px;
+    border: 2px solid rgb(50, 66, 155);
+    border-radius: 10px;
+    padding: 5px;
+    margin: 10px;
+}
+ 
+#min-rating
+{
+    padding: 3px;
+    text-align: center;
+    border: 2px solid rgb(50, 66, 155);
+    border-radius: 10px;
+}
+ 
+ 
+ 
+#planner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+ 
+ 
+.movie-card {
+  background: rgb(242, 231, 231);
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  width: 220px;
+  margin: 10px;
+  padding: 15px;
+  text-align: left;
+  transition: transform 0.5s;
+  background-image: url("");
+}
+ 
+.movie-card:hover {
+  transform: scale(1.05);
+}
+ 
+.movie-card h3 {
+  margin: 0 0 5px;
+  color: #34495e;
+}
+ 
+.movie-card p {
+  margin: 5px 0;
+  color: #555;
+}
+ 
+      </style>
+    </head>
+<body>
+    <h1> Movie Night Planner </h1>
+    <form id="movie-form">
+        <input type="text" id="title" placeholder="😂Movie Title" required>
+        <input type="text" id="director" placeholder="🎬Director" required>
+        <input type="number" id="rating" placeholder="⭐Rating (0-10)" min="0" max="10" step="any" required>
+        <button type="submit" id="button">Add Movie</button>
+    </form>
+   <label for="min-rating" id="min">Minimum Rating:</label>
+<select id="min-rating" name="min-rating">
+  <option value="0">0</option>
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+  <option value="9">9</option>
+  <option value="10">10</option>
+</select>
+ 
+<div id="planner"></div>
+  <script>
+    // Base Class
+class MediaItem {
+  constructor(id, title) {
+    this.id = id;
+    this.title = title;
+  }
+ 
+  getCardHTML() {
+    return `
+      <div class="movie-card">
+        <h3>${this.title}</h3>
+      </div>
+    `;
+  }
+}
+ 
+// Subclass for Movies
+class Movie extends MediaItem {
+  constructor(id, title, director, rating) {
+    super(id, title);
+    this.director = director;
+    this.rating = rating;
+  }
+ 
+  getCardHTML() {
+    return `
+      <div class="movie-card">
+        <h3>${this.title}</h3>
+        <p><strong>Director:</strong> ${this.director}</p>
+        <p><strong>Rating:</strong> ${this.rating}/10</p>
+      </div>
+    `;
+  }
+}
+ 
+// Global Watchlist
+let watchlist = [];
+
+ 
+
+function saveToStorage() {
+  sessionStorage.setItem("watchlist", JSON.stringify(watchlist));
+}
+// It Load from sessionStorage
+function loadFromStorage() {
+  const data = sessionStorage.getItem("watchlist");
+  if (data) {
+    const parsed = JSON.parse(data);
+    watchlist = parsed.map(
+      m => new Movie(m.id, m.title, m.director, m.rating)
+    );
+  }
+}
+ 
+// Save to sessionStorage
+
+ 
+// Add Movie
+function addMovie(movieData) {
+  const id = Date.now();
+  const movie = new Movie(id, movieData.title, movieData.director, movieData.rating);
+  watchlist.push(movie);
+  saveToStorage();
+}
+ 
+// Filter by rating
+function filterByRating(minRating) {
+  return watchlist.filter(movie => movie.rating >= minRating);
+}
+ 
+// Render Movies
+function renderWatchlist(list) {
+  const planner = document.getElementById("planner");
+  planner.innerHTML = "";
+  list.forEach(movie => {
+    planner.innerHTML += movie.getCardHTML();
+  });
+}
+ 
+// Handle Form Submit
+document.getElementById("movie-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+ 
+  const title = document.getElementById("title").value.trim();
+  const director = document.getElementById("director").value.trim();
+  const rating = parseFloat(document.getElementById("rating").value);
+ 
+  if (!title || !director || isNaN(rating)) {
+    alert("Please fill all fields correctly.");
+    return;
+  }
+ 
+  addMovie({ title, director, rating });
+  e.target.reset();
+  renderWatchlist(watchlist);
+});
+ 
+// Handle Filter Change
+document.getElementById("min-rating").addEventListener("change", (e) => {
+  const minRating = parseFloat(e.target.value);
+  const filtered = filterByRating(minRating);
+  renderWatchlist(filtered);
+});
+ 
+// Initialize App
+loadFromStorage();
+renderWatchlist(watchlist);
+  </script>
+ 
+</body>
+</html>
+ 
