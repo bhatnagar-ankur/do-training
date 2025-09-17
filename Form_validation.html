@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sample HTML Form</title>
+    <style>
+        input.error,
+        textarea.error,
+        select.error {
+            border: 2px solid red;
+        }
+
+        input.success,
+        textarea.success,
+        select.success {
+            border: 2px solid green;
+        }
+        body {
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #080808;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {//wait untill html loads
+            const form = document.querySelector("form");
+
+            const validateField = (input) => {
+                let isValid = true; //checking validity for filed
+                let value = input.value.trim();
+
+                if (!value && input.type !== "file" && input.type !== "button" && input.type !== "submit" && input.type !== "reset") {
+                    isValid = false; // if the filed is empty it's not valid
+                }
+                // Name must be between 3 and 10 characters
+                if (input.name === "name") {
+                    if (value.length < 3 || value.length > 10) {
+                        isValid = false;
+                    }
+                }
+                // Email checking
+                if (input.name === "email") {
+                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(value)) {
+                        isValid = false;
+                    }
+                }
+
+                if (input.name === "phone") {
+                    const digits = value.replace(/\D/g, "");// removes charecters
+                    if (digits.length !== 10) {
+                        isValid = false;
+                    }
+                }
+                // making sure dropdown has selected value
+                if (input.tagName === "SELECT" && !value) {
+                    isValid = false;
+                }
+
+                if (input.tagName === "TEXTAREA" && !value) {
+                    isValid = false;
+                }
+                // for adding colors depeds on validation
+                if (isValid) {
+                    input.classList.remove("error");
+                    input.classList.add("success");
+                } else {
+                    input.classList.add("error");
+                    input.classList.remove("success");
+                }
+                return isValid;
+            };
+
+            // runtime validation
+            const allInputs = form.querySelectorAll("input, textarea, select");
+            allInputs.forEach(input => {
+                input.addEventListener("input", () => validateField(input));
+                input.addEventListener("blur", () => validateField(input));
+            });
+
+            // phone formatting
+            const phoneInput = document.getElementById("phone");
+
+            phoneInput.addEventListener("input", function () {
+                let digits = phoneInput.value.replace(/\D/g, ""); // only numbers
+                if (digits.length > 10) digits = digits.substring(0, 10);// only 10 numbers
+                // formatting as (+91) 9912-345-678
+                let formatted = "";
+                if (digits.length > 0) formatted = "(+91) ";
+                if (digits.length <= 4) {
+                    formatted += digits;
+                } else if (digits.length <= 7) {
+                    formatted += digits.substring(0, 4) + "-" + digits.substring(4);
+                } else {
+                    formatted += digits.substring(0, 4) + "-" + digits.substring(4, 7) + "-" + digits.substring(7);
+                }
+
+                phoneInput.value = formatted;
+
+                if (digits.length === 10) {
+                    phoneInput.style.border = "2px solid green";
+                } else {
+                    phoneInput.style.border = "2px solid red";
+                }
+            });
+            // final submit check
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                let valid = true; //validates again
+                allInputs.forEach(input => {
+                    if (!validateField(input)) {
+                        valid = false;
+                    }
+                });
+            
+            });
+            
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Sample HTML Form</h1>
+    <form>
+        <label>Name:</label>
+        <input type="text" name="name" placeholder="Scrooge McDuck" minlength="5" maxlength=""><br><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" placeholder="john@example.com"><br><br>
+
+        <label>Phone:</label>
+        <input type="tel" id="phone" name="phone" placeholder="(+91) 9912-532-101"><br><br>
+
+        <label>Telephone:</label>
+        <input type="tel" name="tel" placeholder="123-456-7890"><br><br>
+
+        <label>URL:</label>
+        <input type="url" name="url" placeholder="https://example.com"><br><br>
+
+        <label>Search:</label>
+        <input type="search" name="search" placeholder="Sample search"><br><br>
+
+        <label>DOB:</label>
+        <input type="date" name="date"><br><br>
+
+        <label>Time:</label>
+        <input type="time" name="time"><br><br>
+
+        <label>Datetime Local:</label>
+        <input type="datetime-local" name="datetime-local"><br><br>
+
+        <label>Month:</label>
+        <input type="month" name="month"><br><br>
+
+        <label>Week:</label>
+        <input type="week" name="week"><br><br>
+
+        <label>Color:</label>
+        <input type="color" name="color"><br><br>
+
+        <label>File:</label>
+        <input type="file" name="file"><br><br>
+
+        <label>Gender:</label>
+        <input type="radio" name="gender" value="male"> Male
+        <input type="radio" name="gender" value="female"> Female
+        <input type="radio" name="gender" value="other"> Other<br><br>
+
+        <label>Skills:</label>
+        <input type="checkbox" name="skills" value="HTML"> HTML
+        <input type="checkbox" name="skills" value="CSS"> CSS
+        <input type="checkbox" name="skills" value="JS"> JS<br><br>
+
+        <label>Select Country:</label>
+        <select name="country">
+            <option value="">--Select--</option>
+            <option value="india">India</option>
+            <option value="bangladesh">Bangladesh</option>
+            <option value="nepal">Nepal</option>
+            <option value="bhutan">Bhutan</option>
+            <option value="sri-lanka">Sri Lanka</option>
+            <option value="myanmar">Myanmar</option>
+            <option value="china">China</option>
+        </select><br><br>
+        <input type="number" id="rating" placeholder="Rating (0-10)" min="0" max="10" required>
+
+        <label>Address:</label><br>
+        <textarea name="address" rows="4" cols="30" placeholder="Sample text here."></textarea><br><br>
+
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+
+        <button type="button">Button</button>
+    </form>
+</body>
+
+</html>
