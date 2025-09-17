@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Drag & Drop Todo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: lightgray;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin: 50px;
+      font-family: Arial, sans-serif;
+    }
+ 
+ 
+    button {
+      background-color: lightblue;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+ 
+    #tab:hover {
+      background-color: aqua;
+    }
+ 
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+    }
+ 
+    ul {
+      list-style-type: circle;
+      background-color: lightgrey;
+      padding: 10px;
+      min-height: 200px;
+      border: 1px dashed black;
+      border-radius: 10px;
+      width: 90%;
+    }
+ 
+    li {
+      margin: 5px 0;
+      padding: 10px;
+      background-color: white;
+      border-radius: 5px;
+      cursor: grab;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+ 
+    .container {
+      border: 2px solid black;
+      padding: 50px;
+      background-color: rgb(173, 164, 164);
+      border-radius: 10px;
+      display: flex;
+      gap: 50px;
+    }
+ 
+    .list-box {
+      width: 300px;
+      background-color: rgb(95, 90, 100);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+ 
+   
+    .droppable {
+      background-color: #ccc;
+    }
+  </style>
+ 
+  <script>
+    let draggedItem = null;
+    function addList() {
+      var data = document.getElementById('textvalue').value.trim();
+      if (data === "") return;
+      const item = createListItem(data);
+      document.getElementById('leftList').appendChild(item);
+      document.getElementById('textvalue').value = '';
+    }
+ 
+    function createListItem(text) {
+      const li = document.createElement("li");
+      li.setAttribute("draggable", "true");
+      li.textContent = text;
+ 
+      const deleteBtn = document.createElement("button");
+      deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+      deleteBtn.className = "trash-btn";
+      deleteBtn.onclick = function () {
+        li.remove();
+      };
+      li.appendChild(deleteBtn);
+ 
+   
+      li.addEventListener("dragstart", function () {
+        draggedItem = li;
+      });
+ 
+      return li;
+    }
+ 
+    function setupDroppableArea(areaId) {
+      const area = document.getElementById(areaId);
+ 
+      area.addEventListener("dragover", function (e) {
+        e.preventDefault();
+        area.classList.add("droppable");
+      });
+ 
+      area.addEventListener("dragleave", function () {
+        area.classList.remove("droppable");
+      });
+ 
+      area.addEventListener("drop", function (e) {
+        e.preventDefault();
+        area.classList.remove("droppable");
+        if (draggedItem && !area.contains(draggedItem)) {
+          area.appendChild(draggedItem);
+        }
+      });
+    }
+ 
+    window.onload = function () {
+      setupDroppableArea("leftList");
+      setupDroppableArea("rightList");
+    };
+  </script>
+</head>
+<body>
+  <div class="container">
+ 
+    <div class="list-box">
+      <input type="text" id="textvalue" autofocus placeholder="Add a new task">
+      <button onclick="addList()" id="tab">
+        <i class="fa fa-plus" style="font-size:20px;color:green"></i> Add
+      </button>
+      <ul id="leftList"></ul>
+    </div>
+ 
+   
+    <div class="list-box">
+      <ul id="rightList"></ul>
+    </div>
+  </div>
+</body>
+</html>
