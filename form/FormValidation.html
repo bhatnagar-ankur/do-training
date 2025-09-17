@@ -1,0 +1,339 @@
+ <!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample HTML Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+         document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+ 
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            form.addEventListener('submit', function (e) {
+                let valid = true;
+                let messages = [];
+               
+                // Get the ul element for displaying messages
+                const ulElement = document.getElementById("list");
+               
+                // Clear previous messages and error styling
+                if (ulElement) {
+                    ulElement.innerHTML = '';
+                }
+                document.querySelectorAll('input, select, textarea').forEach(input => {
+                    input.classList.remove('border-red-500', 'border-2');
+                    input.classList.add('border-gray-300');
+                });
+               
+ 
+                const inputs = form.querySelectorAll('input:not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"])');
+                inputs.forEach(input => {
+                    const phonePattern = /^\(\+91\)\d{4}-\d{3}-\d{3}$/;
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                   
+                    // Email validation
+                    if (input.name === 'email') {
+                        if (!emailRegex.test(input.value)) {
+                            input.classList.remove('border-gray-300');
+                            input.classList.add('border-red-500', 'border-2');
+                            messages.push('Please enter a valid email address.');
+                        }
+                    }
+                   
+                    // Phone number validation and formatting
+                    if (input.name === 'number') {
+                        if (input.value.trim()) {
+                            if (!phonePattern.test(input.value)) {
+                                input.classList.remove('border-gray-300');
+                                input.classList.add('border-red-500', 'border-2');
+                                messages.push('Phone number must be in format (+91)XXXX-XXX-XXX');
+                            }
+                        }
+                    }
+                    // Name validation
+                    if (input.name === 'name') {
+                        if (!input.value.trim()) {
+                            valid = false;
+                            input.classList.remove('border-gray-300');
+                            input.classList.add('border-red-500', 'border-2');
+                            messages.push('Name is required.');
+                        } else if (input.value.length < 5) {
+                            valid = false;
+                            input.classList.remove('border-gray-300');
+                            input.classList.add('border-red-500', 'border-2');
+                            messages.push('Name must be greater than 5 characters.');
+                        } else if (input.value.length > 10) {
+                            valid = false;
+                            input.classList.remove('border-gray-300');
+                            input.classList.add('border-red-500', 'border-2');
+                            messages.push('Name must be between 5 to 10 characters.');
+                        }
+                    }
+                   
+                    // General required field validation (except radio, checkbox, email, name, number)
+                    else if (input.type !== 'radio' && input.type !== 'checkbox' &&
+                             input.name !== 'email' && input.name !== 'name' && input.name !== 'number') {
+                        if (!input.value.trim()) {
+                            valid = false;
+                            input.classList.remove('border-gray-300');
+                            input.classList.add('border-red-500', 'border-2');
+                            messages.push(`${input.name.charAt(0).toUpperCase() + input.name.slice(1)} is required.`);
+                        }
+                    }
+                });
+               
+                // Validate radio buttons (Gender)
+                if (!form.querySelector('input[name="gender"]:checked')) {
+                    valid = false;
+                    messages.push('Gender is required.');
+                }
+               
+                // Validate checkboxes (Skills)
+                if (!form.querySelector('input[name="skills"]:checked')) {
+                    valid = false;
+                    messages.push('At least one skill is required.');
+                }
+               
+                // Validate select dropdown
+                const select = form.querySelector('select');
+                if (!select.value) {
+                    valid = false;
+                    select.classList.remove('border-gray-300');
+                    select.classList.add('border-red-500', 'border-2');
+                    messages.push('Country is required.');
+                }
+ 
+                // Validate textarea
+                const textarea = form.querySelector('textarea');
+                if (!textarea.value.trim()) {
+                    valid = false;
+                    textarea.classList.remove('border-gray-300');
+                    textarea.classList.add('border-red-500', 'border-2');
+                    messages.push('Address is required.');
+                }
+ 
+                // Show validation messages
+               if (messages.length) {
+                    e.preventDefault();
+                    for (let index = 0; index < messages.length; index++) {
+                        createLiAndAppend(messages[index]);
+                    }
+                    // alert(messages.join('\n'));
+                }
+ 
+                function createLiAndAppend(value) {
+                    var liElement = document.createElement("li");
+                    liElement.textContent = value;
+                    liElement.className = "bg-red-50 border border-red-200 text-red-800 px-4 py-2 rounded-md text-sm";
+                    ulElement.appendChild(liElement);
+                }
+            });
+           
+            // Add phone number formatting on input
+            const phoneInput = document.getElementById('number');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function(e) {
+                    // Keep only digits
+                    let digits = e.target.value.replace(/\D/g, "");
+                   
+                    // Limit to 10 digits
+                    if (digits.length > 10) {
+                        digits = digits.substring(0, 10);
+                    }
+                   
+                    // Format the number
+                    let formatted = "(+91)";
+                   
+                    if (digits.length > 0) {
+                        formatted += digits.substring(0, 4);
+                    }
+                    if (digits.length >= 5) {
+                        formatted += "-" + digits.substring(4, 7);
+                    }
+                    if (digits.length >= 8) {
+                        formatted += "-" + digits.substring(7, 10);
+                    }
+                   
+                    // Update the input value
+                    e.target.value = formatted;
+                });
+            }
+        });
+    </script>
+</head>
+ 
+<body class="bg-gray-50 min-h-screen py-8">
+    <div class="max-w-2xl mx-auto px-4">
+        <h1 class="text-3xl font-bold text-gray-900 text-center mb-8">Sample HTML Form</h1>
+       
+        <form class="bg-white shadow-lg rounded-lg p-8 space-y-6">
+            <!-- Name Field -->
+            <div>
+                <label for="name" id="namefield" class="block text-sm font-medium text-gray-700 mb-2">Name:</label>
+                <input type="text" id="text" name="name" placeholder="Scrooge McDuck"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+ 
+            <!-- Email Field -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email:</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+ 
+            <!-- Phone Number Field -->
+            <div>
+                <label for="number" class="block text-sm font-medium text-gray-700 mb-2">Phone Number:</label>
+                <input type="text" id="number" name="number" placeholder="Enter 10 digit phone number"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+ 
+            <!-- Telephone Field -->
+            <div>
+                <label for="tel" class="block text-sm font-medium text-gray-700 mb-2">Telephone:</label>
+                <input type="tel" id="tel" name="tel" placeholder="123-456-7890"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+ 
+            <!-- URL Field -->
+            <div>
+                <label for="url" class="block text-sm font-medium text-gray-700 mb-2">URL:</label>
+                <input type="url" id="url" name="url" placeholder="https://example.com"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+ 
+            <!-- Search Field -->
+            <div>
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Search:</label>
+                <input type="search" id="search" name="search" placeholder="Sample search"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+ 
+            <!-- Date Fields Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="date" class="block text-sm font-medium text-gray-700 mb-2">DOB:</label>
+                    <input type="date" id="date" name="date"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+ 
+                <div>
+                    <label for="time" class="block text-sm font-medium text-gray-700 mb-2">Time:</label>
+                    <input type="time" id="time" name="time"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+ 
+                <div>
+                    <label for="datetime-local" class="block text-sm font-medium text-gray-700 mb-2">Datetime Local:</label>
+                    <input type="datetime-local" id="datetime-local" name="datetime-local"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+ 
+                <div>
+                    <label for="month" class="block text-sm font-medium text-gray-700 mb-2">Month:</label>
+                    <input type="month" id="month" name="month"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+ 
+                <div>
+                    <label for="week" class="block text-sm font-medium text-gray-700 mb-2">Week:</label>
+                    <input type="week" id="week" name="week"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+ 
+                <div>
+                    <label for="color" class="block text-sm font-medium text-gray-700 mb-2">Color:</label>
+                    <input type="color" id="color" name="color"
+                           class="w-full h-10 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+ 
+            <!-- File Upload -->
+            <div>
+                <label for="file" class="block text-sm font-medium text-gray-700 mb-2">File:</label>
+                <input type="file" id="file" name="file"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+            </div>
+ 
+            <!-- Gender Radio Buttons -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-3">Gender:</label>
+                <div class="flex flex-wrap gap-4">
+                    <div class="flex items-center">
+                        <input type="radio" id="male" name="gender" value="male" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                        <label for="male" class="ml-2 text-sm text-gray-700">Male</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" id="female" name="gender" value="female" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                        <label for="female" class="ml-2 text-sm text-gray-700">Female</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="radio" id="other" name="gender" value="other" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                        <label for="other" class="ml-2 text-sm text-gray-700">Other</label>
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- Skills Checkboxes -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-3">Skills:</label>
+                <div class="flex flex-wrap gap-4">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="html" name="skills" value="HTML" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="html" class="ml-2 text-sm text-gray-700">HTML</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="css" name="skills" value="CSS" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="css" class="ml-2 text-sm text-gray-700">CSS</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="js" name="skills" value="JS" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="js" class="ml-2 text-sm text-gray-700">JS</label>
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- Country Select -->
+            <div>
+                <label for="select" class="block text-sm font-medium text-gray-700 mb-2">Select Country:</label>
+                <select id="select" name="select"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Choose a country</option>
+                    <option value="india">India</option>
+                    <option value="bangladesh">Bangladesh</option>
+                    <option value="nepal">Nepal</option>
+                    <option value="bhutan">Bhutan</option>
+                    <option value="sri-lanka">Sri Lanka</option>
+                    <option value="myanmar">Myanmar</option>
+                    <option value="china">China</option>
+                </select>
+            </div>
+ 
+            <!-- Address Textarea -->
+            <div>
+                <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Address:</label>
+                <textarea id="address" name="address" rows="4" placeholder="Sample text here."
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical"></textarea>
+            </div>
+ 
+            <!-- Form Buttons -->
+            <div class="flex flex-wrap gap-4 pt-4">
+                <input type="submit" value="Submit"
+                       class="px-6 py-2 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer">
+                <input type="reset" value="Reset"
+                       class="px-6 py-2 bg-gray-600 text-white font-medium rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 cursor-pointer">
+                <button type="button"
+                        class="px-6 py-2 bg-green-600 text-white font-medium rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">Button</button>
+            </div>
+        </form>
+ 
+        <!-- Error Messages -->
+        <div class="mt-6">
+            <ul id="list" class="space-y-2"></ul>
+        </div>
+    </div>
+</body>
+ 
+</html>
