@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Movie Night Planner</title>
+    <link rel="stylesheet" href="movie.css" />
+</head>
+<body>
+    <h1>Movie Night Planner</h1>
+ 
+    <form id="movieForm">
+        <input type="text" id="title" placeholder="Movie Title" required />
+        <input type="text" id="director" placeholder="Director" required />
+        <input type="number" id="rating" placeholder="Rating (0–10)" min="0" max="10" step="0.1" required />
+        <button type="submit">Add Movie</button>
+    </form>
+ 
+    <div class="filter-container">
+        <label for="minRating">Minimum Rating:</label>
+        <input type="range" id="minRating" min="0" max="10" step="0.1" value="0"/>
+        <span id="ratingValue">0</span>
+    </div>
+ 
+    <div id="planner"></div>
+ 
+    <script src="movie.js"></script>
+</body>
+</html>

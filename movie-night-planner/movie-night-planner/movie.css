@@ -1,0 +1,75 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: rgb(2, 104, 104);
+    color: #000000;
+    text-align: center;
+    padding: 20px;
+}
+ 
+h1 {
+    margin-bottom: 20px;
+}
+ 
+form {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+ 
+form input, form button {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+ 
+form button {
+    background-color: #ff6f61;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+ 
+form button:hover {
+    transform: scale(1.05);
+}
+ 
+.filter-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+ 
+#planner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+ 
+.movie-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    width: 200px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+ 
+.movie-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+ 
+.movie-card h3 {
+    margin: 10px 0 5px 0;
+}
+ 
+.movie-card p {
+    margin: 5px 0;
+}
