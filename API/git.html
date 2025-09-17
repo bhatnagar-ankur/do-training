@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub API Explorer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        input,
+        textarea,
+        button {
+            margin: 5px 0;
+            display: block;
+            width: 100%;
+            padding: 8px;
+        }
+
+        #output {
+            white-space: pre-wrap;
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>GitHub API Explorer</h1>
+
+    <label>GitHub Token (optional, required for POST/DELETE/PATCH):</label>
+    <input type="password" id="token" placeholder="ghp_...">
+
+    <h2>Get User Profile</h2>
+    <input type="text" id="username" placeholder="GitHub username">
+    <button onclick="getUserProfile()">Get Profile</button>
+
+    <h2>Get User Repositories</h2>
+    <input type="text" id="reposUsername" placeholder="GitHub username">
+    <button onclick="getUserRepos()">Get Repos</button>
+
+    <h2>Get Repository Issues</h2>
+    <input type="text" id="owner" placeholder="Repo Owner">
+    <input type="text" id="repo" placeholder="Repository Name">
+    <button onclick="getRepoIssues()">Get Issues</button>
+
+    <h2>Create New Issue</h2>
+    <input type="text" id="issueOwner" placeholder="Repo Owner">
+    <input type="text" id="issueRepo" placeholder="Repository Name">
+    <input type="text" id="issueTitle" placeholder="Issue Title">
+    <textarea id="issueBody" placeholder="Issue Body"></textarea>
+    <button onclick="createIssue()">Create Issue</button>
+
+    <h2>Create Gist</h2>
+    <input type="text" id="gistDescription" placeholder="Gist Description">
+    <textarea id="gistContent" placeholder="Gist Content"></textarea>
+    <button onclick="createGist()">Create Gist</button>
+
+    <h2>API Response</h2>
+    <div id="output">Responses will appear here...</div>
+
+    <script>
+        function getHeaders() {
+            const token = document.getElementById('token').value.trim();
+            const headers = {
+                'Accept': 'application/vnd.github+json'
+            };
+            if (token) {
+                headers['Authorization'] = `token ${token}`;
+            }
+            return headers;
+        }
+
+        function displayOutput(data) {
+            document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function getUserProfile() {
+            const username = document.getElementById('username').value.trim();
+            const res = await fetch(`https://api.github.com/users/${username}`, {
+                headers: getHeaders()
+            });
+            const data = await res.json();
+            displayOutput(data);
+        }
+
+        async function getUserRepos() {
+            const username = document.getElementById('reposUsername').value.trim();
+            const res = await fetch(`https://api.github.com/users/${username}/repos`, {
+                headers: getHeaders()
+            });
+            const data = await res.json();
+            displayOutput(data);
+        }
+
+
+
+        /* Get repository issues create new issue and create gist will work only if the token generated is mentioned in the token input field*/
+        async function getRepoIssues() {
+            const owner = document.getElementById('owner').value.trim();
+            const repo = document.getElementById('repo').value.trim();
+            const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues`, {
+                headers: getHeaders()
+            });
+            const data = await res.json();
+            displayOutput(data);
+        }
+
+        async function createIssue() {
+            const owner = document.getElementById('issueOwner').value.trim();
+            const repo = document.getElementById('issueRepo').value.trim();
+            const title = document.getElementById('issueTitle').value.trim();
+            const body = document.getElementById('issueBody').value.trim();
+
+            const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues`, {
+                method: 'POST',
+                headers: {
+                    ...getHeaders(),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title, body })
+            });
+            const data = await res.json();
+            displayOutput(data);
+        }
+
+        async function createGist() {
+            const description = document.getElementById('gistDescription').value.trim();
+            const content = document.getElementById('gistContent').value.trim();
+
+            const res = await fetch(`https://api.github.com/gists`, {
+                method: 'POST',
+                headers: {
+                    ...getHeaders(),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    description,
+                    public: true,
+                    files: {
+                        "file1.txt": {
+                            content
+                        }
+                    }
+                })
+            });
+            const data = await res.json();
+            displayOutput(data);
+        }
+    </script>
+</body>
+
+</html>
