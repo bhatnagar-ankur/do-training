@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Night Planner</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color:9ebc9e;
+            color: #fff;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #ffafc5;
+        }
+        
+        .subtitle {
+            color: #8fe3cf;
+            font-size: 1.2rem;
+        }
+        
+        .form-section {
+            background: #553e4e;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-title {
+            margin-bottom: 20px;
+            color: #ffcfd2;
+            text-align: center;
+        }
+        
+        #movieform {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            #movieform {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #8fe3cf;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1e1e30;
+            color: #fff;
+            font-size: 1rem;
+            border: 2px solid #0f3460;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+        
+        button {
+            grid-column: span 2;
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            button {
+                grid-column: span 1;
+            }
+        }
+        
+        button:hover {
+            background: #ff577f;
+        }
+        
+        .filter-section {
+            background: #16213e;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .filter-controls {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .slider-container {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #1e1e30;
+            outline: none;
+        }
+        
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #e94560;
+            cursor: pointer;
+        }
+        
+        .rating-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: #e94560;
+            font-size: 1.2rem;
+        }
+        
+        .movies-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .movie-card {
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .movie-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            padding: 20px;
+            text-align: center;
+            background: #0f3460;
+        }
+        
+        .movie-title {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+        
+        .movie-director {
+            color: #8fe3cf;
+            font-style: italic;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .movie-info {
+            margin-bottom: 15px;
+        }
+        
+        .movie-rating {
+            display: inline-block;
+            background: #e94560;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            color: #8fe3cf;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .action-btn:hover {
+            color: #e94560;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            grid-column: 1 / -1;
+            color: #8fe3cf;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #0f3460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Movie Night Planner</h1>
+            <p class="subtitle">Plan your perfect movie night with your favorite films</p>
+        </header>
+        
+        <section class="form-section">
+            <h2 class="form-title">Add a New Movie</h2>
+            <form id="movieform">
+                <div class="input-group">
+                    <label for="title">Movie Title</label>
+                    <input type="text" placeholder="Enter movie title" id="title" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="director">Director</label>
+                    <input type="text" placeholder="Enter director's name" id="director" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="rating">Rating (0-10)</label>
+                    <input type="number" placeholder="Enter rating" id="rating" min="0" max="10" step="0.1" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="poster">Poster URL (Optional)</label>
+                    <input type="url" placeholder="Enter poster image URL" id="poster">
+                </div>
+                
+                <button type="submit">Add Movie</button>
+            </form>
+        </section>
+        
+        <section class="filter-section">
+            <h2 class="form-title">Filter Movies</h2>
+            <div class="filter-controls">
+                <div class="slider-container">
+                    <label for="minRating">Minimum Rating: <span id="ratingValue">0</span></label>
+                    <input type="range" id="minRating" class="range-slider" min="0" max="10" step="0.5" value="0">
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2 class="form-title">Your Movie List</h2>
+            <div id="planner" class="movies-container">
+                <div class="empty-state">
+                    <i>🎬</i>
+                    <h3>No movies added yet</h3>
+                    <p>Add some movies to your watchlist to see them here</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Fix for the rating.value undefined error and complete implementation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const movieForm = document.getElementById('movieform');
+            const titleInput = document.getElementById('title');
+            const directorInput = document.getElementById('director');
+            const ratingInput = document.getElementById('rating');
+            const posterInput = document.getElementById('poster');
+            const minRatingFilter = document.getElementById('minRating');
+            const ratingValueSpan = document.getElementById('ratingValue');
+            const plannerDiv = document.getElementById('planner');
+            
+            // Initialize variables
+            let watchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+            let movieId = watchlist.length > 0 ? Math.max(...watchlist.map(m => m.id)) + 1 : 1;
+            
+            // Update the rating value display
+            minRatingFilter.addEventListener('input', function() {
+                ratingValueSpan.textContent = this.value;
+                filterMoviesByRating(parseFloat(this.value));
+            });
+            
+            // Form submission handler
+            movieForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const title = titleInput.value.trim();
+                const director = directorInput.value.trim();
+                const rating = parseFloat(ratingInput.value);
+                const poster = posterInput.value.trim() || 'https://via.placeholder.com/300x450/16213e/8fe3cf?text=No+Poster';
+                
+                // Create new movie
+                const movie = new Movie(movieId++, title, director, rating, poster);
+                
+                // Add to watchlist
+                watchlist.push(movie);
+                
+                // Save to localStorage
+                saveToLocalStorage();
+                
+                // Update UI
+                renderMovies();
+                
+                // Reset form
+                movieForm.reset();
+            });
+            
+            // Class definitions
+            class MediaItem {
+                constructor(id, title) {
+                    this.id = id;
+                    this.title = title;
+                }
+                
+                getCardHTML() {
+                    return `
+                        <div class="movie-card">
+                            <p>${this.title}</p>
+                        </div>`;
+                }
+            }
+            
+            class Movie extends MediaItem {
+                constructor(id, title, director, rating, poster) {
+                    super(id, title);
+                    this.director = director;
+                    this.rating = rating;
+                    this.poster = poster;
+                }
+                
+                getCardHTML() {
+                    return `
+                    <div class="movie-card" data-id="${this.id}">
+                        <div class="card-header">
+                            <h3 class="movie-title">${this.title}</h3>
+                            <p class="movie-director">Directed by ${this.director}</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="movie-info">
+                                <span class="movie-rating">⭐ ${this.rating}/10</span>
+                            </div>
+                            <div class="card-actions">
+                                <button class="action-btn" onclick="removeMovie(${this.id})">
+                                    <i>🗑️</i> Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+                }
+            }
+            
+            // Function to save to localStorage
+            function saveToLocalStorage() {
+                localStorage.setItem('watchlist', JSON.stringify(watchlist));
+            }
+            
+            // Function to render movies
+            function renderMovies() {
+                if (watchlist.length === 0) {
+                    plannerDiv.innerHTML = `
+                        <div class="empty-state">
+                            <i>🎬</i>
+                            <h3>No movies added yet</h3>
+                            <p>Add some movies to your watchlist to see them here</p>
+                        </div>`;
+                    return;
+                }
+                
+                plannerDiv.innerHTML = '';
+                watchlist.forEach(movie => {
+                    const movieObj = new Movie(movie.id, movie.title, movie.director, movie.rating, movie.poster);
+                    plannerDiv.innerHTML += movieObj.getCardHTML();
+                });
+            }
+            
+            // Function to filter movies by rating
+            function filterMoviesByRating(minRating) {
+                const filteredMovies = watchlist.filter(movie => movie.rating >= minRating);
+                
+                if (filteredMovies.length === 0) {
+                    plannerDiv.innerHTML = `
+                        <div class="empty-state">
+                            <i>🔍</i>
+                            <h3>No movies match your filter</h3>
+                            <p>Try adjusting the minimum rating value</p>
+                        </div>`;
+                    return;
+                }
+                
+                plannerDiv.innerHTML = '';
+                filteredMovies.forEach(movie => {
+                    const movieObj = new Movie(movie.id, movie.title, movie.director, movie.rating, movie.poster);
+                    plannerDiv.innerHTML += movieObj.getCardHTML();
+                });
+            }
+            
+            // Function to remove a movie
+            function removeMovie(id) {
+                watchlist = watchlist.filter(movie => movie.id !== id);
+                saveToLocalStorage();
+                renderMovies();
+            }
+            
+            // Make removeMovie function available globally
+            window.removeMovie = removeMovie;
+            
+            // Initial render
+            renderMovies();
+        });
+    </script>
+</body>
+</html>
