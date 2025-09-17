@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub API Explorer</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input[type="text"], input[type="password"], select, textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #json-output {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>GitHub API Explorer</h1>
+        <p>Select an endpoint, fill in the required details, and send a request to the GitHub API.</p>
+
+        <div class="form-group">
+            <label for="endpoint-select">Select Endpoint:</label>
+            <select id="endpoint-select">
+                <option value="">-- Choose an endpoint --</option>
+                <optgroup label="User & Repository Data (No Auth)">
+                    <option value="user_profile">GET User Profile</option>
+                    <option value="user_repos">GET User’s Public Repositories</option>
+                    <option value="repo_issues">GET Repository Issues</option>
+                </optgroup>
+                <optgroup label="Issue Management (Auth Required)">
+                    <option value="post_issue">POST New Issue</option>
+                    <option value="patch_issue">PATCH Edit Issue</option>
+                </optgroup>
+                <optgroup label="Gist Management (Auth Required)">
+                    <option value="post_gist">POST Create Gist</option>
+                    <option value="patch_gist">PATCH Update Gist</option>
+                    <option value="delete_gist">DELETE Gist</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="token-input">Personal Access Token (for authenticated endpoints):</label>
+            <input type="password" id="token-input" placeholder="Enter your token">
+        </div>
+
+        <!-- Dynamic Input Fields -->
+        <div id="dynamic-inputs">
+            <div class="form-group hidden" id="username-group">
+                <input type="text" id="username-input" placeholder="username">
+            </div>
+            <div class="form-group hidden" id="owner-group">
+                <input type="text" id="owner-input" placeholder="owner">
+            </div>
+            <div class="form-group hidden" id="repo-group">
+                <input type="text" id="repo-input" placeholder="repo">
+            </div>
+            <div class="form-group hidden" id="issue-number-group">
+                <input type="text" id="issue-number-input" placeholder="issue_number">
+            </div>
+            <div class="form-group hidden" id="gist-id-group">
+                <input type="text" id="gist-id-input" placeholder="gist_id">
+            </div>
+        </div>
+
+        <div class="form-group hidden" id="body-group">
+            <label for="body-textarea">Request Body (JSON):</label>
+            <textarea id="body-textarea" rows="8"></textarea>
+        </div>
+
+        <button id="send-btn">Send Request</button>
+
+        <h3>Response:</h3>
+        <p id="status-message"></p>
+        <pre id="json-output"></pre>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const endpointSelect = document.getElementById('endpoint-select');
+            const tokenInput = document.getElementById('token-input');
+            const dynamicInputs = document.getElementById('dynamic-inputs');
+            const bodyGroup = document.getElementById('body-group');
+            const bodyTextarea = document.getElementById('body-textarea');
+            const sendBtn = document.getElementById('send-btn');
+            const statusMessage = document.getElementById('status-message');
+            const jsonOutput = document.getElementById('json-output');
+
+            const endpointMap = {
+                user_profile: { url: 'https://api.github.com/users/{username}', method: 'GET', requiresAuth: false, params: ['username'] },
+                user_repos: { url: 'https://api.github.com/users/{username}/repos', method: 'GET', requiresAuth: false, params: ['username'] },
+                repo_issues: { url: 'https://api.github.com/repos/{owner}/{repo}/issues', method: 'GET', requiresAuth: false, params: ['owner', 'repo'] },
+                post_issue: { url: 'https://api.github.com/repos/{owner}/{repo}/issues', method: 'POST', requiresAuth: true, params: ['owner', 'repo'], body: true, defaultBody: '{\n  "title": "New issue from API Explorer",\n  "body": "This is a test issue."\n}' },
+                patch_issue: { url: 'https://api.github.com/repos/{owner}/{repo}/issues/{issue_number}', method: 'PATCH', requiresAuth: true, params: ['owner', 'repo', 'issue_number'], body: true, defaultBody: '{\n  "title": "Updated title",\n  "state": "closed"\n}' },
+                post_gist: { url: 'https://api.github.com/gists', method: 'POST', requiresAuth: true, params: [], body: true, defaultBody: '{\n  "description": "Example gist",\n  "public": true,\n  "files": {\n    "file1.txt": {\n      "content": "Hello World"\n    }\n  }\n}' },
+                patch_gist: { url: 'https://api.github.com/gists/{gist_id}', method: 'PATCH', requiresAuth: true, params: ['gist_id'], body: true, defaultBody: '{\n  "files": {\n    "file1.txt": {\n      "content": "Updated content"\n    }\n  }\n}' },
+                delete_gist: { url: 'https://api.github.com/gists/{gist_id}', method: 'DELETE', requiresAuth: true, params: ['gist_id'] }
+            };
+
+            const inputElementMap = {
+                username: document.getElementById('username-group'),
+                owner: document.getElementById('owner-group'),
+                repo: document.getElementById('repo-group'),
+                issue_number: document.getElementById('issue-number-group'),
+                gist_id: document.getElementById('gist-id-group')
+            };
+
+            endpointSelect.addEventListener('change', () => {
+                const selectedEndpointKey = endpointSelect.value;
+                Object.values(inputElementMap).forEach(el => el.classList.add('hidden'));
+                bodyGroup.classList.add('hidden');
+                bodyTextarea.value = '';
+
+                if (selectedEndpointKey) {
+                    const endpoint = endpointMap[selectedEndpointKey];
+                    endpoint.params.forEach(param => {
+                        inputElementMap[param].classList.remove('hidden');
+                    });
+                    if (endpoint.body) {
+                        bodyGroup.classList.remove('hidden');
+                        bodyTextarea.value = endpoint.defaultBody;
+                    }
+                }
+            });
+
+            sendBtn.addEventListener('click', async () => {
+                const selectedEndpointKey = endpointSelect.value;
+                if (!selectedEndpointKey) {
+                    statusMessage.textContent = 'Please select an API endpoint.';
+                    jsonOutput.textContent = '';
+                    return;
+                }
+
+                const endpointInfo = endpointMap[selectedEndpointKey];
+                let url = endpointInfo.url;
+                const token = tokenInput.value;
+
+                try {
+                    // Replace placeholders with input values
+                    endpointInfo.params.forEach(param => {
+                        const input = document.getElementById(`${param}-input`);
+                        if (!input.value) {
+                            throw new Error(`Missing required parameter: ${param}`);
+                        }
+                        url = url.replace(`{${param}}`, input.value);
+                    });
+                } catch (error) {
+                    statusMessage.textContent = `Error: ${error.message}`;
+                    return;
+                }
+                
+                const options = {
+                    method: endpointInfo.method,
+                    headers: { 'Content-Type': 'application/json' }
+                };
+
+                if (endpointInfo.requiresAuth) {
+                    if (!token) {
+                        statusMessage.textContent = 'Error: This endpoint requires a Personal Access Token.';
+                        return;
+                    }
+                    options.headers['Authorization'] = `token ${token}`;
+                }
+
+                if (endpointInfo.body) {
+                    try {
+                        options.body = JSON.stringify(JSON.parse(bodyTextarea.value));
+                    } catch (e) {
+                        statusMessage.textContent = 'Error: Invalid JSON in request body.';
+                        return;
+                    }
+                }
+
+                statusMessage.textContent = 'Sending request...';
+                jsonOutput.textContent = '';
+
+                try {
+                    const response = await fetch(url, options);
+                    let result = null;
+                    if (response.status !== 204) { // 204 No Content for DELETE
+                        result = await response.json();
+                    }
+                    
+                    if (!response.ok) {
+                        statusMessage.textContent = `Error: ${response.status} ${response.statusText}`;
+                    } else {
+                        statusMessage.textContent = `Success! Status: ${response.status}`;
+                    }
+                    jsonOutput.textContent = result ? JSON.stringify(result, null, 2) : 'No content returned.';
+
+                } catch (error) {
+                    statusMessage.textContent = `Network Error: ${error.message}`;
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
