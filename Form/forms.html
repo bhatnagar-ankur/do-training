@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sample HTML Form with Tailwind</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    const ulElement = document.getElementById("list");
+    const ele = document.getElementById("ele");
+    const telInput = document.getElementById("tel");
+    const phoneInput=document.getElementById("number");
+    const summaryBox=document.getElementById("summary");
+ 
+    // Telephone 
+    telInput.addEventListener('input', function () {
+      let digits = telInput.value.replace(/\D/g, '').substring(0, 10);
+      let formatted = '';
+      if (digits.length > 0) formatted += digits.substring(0, 3);
+      if (digits.length >= 4) formatted += '-' + digits.substring(3, 6);
+      if (digits.length >= 7) formatted += '-' + digits.substring(6, 10);
+      telInput.value = formatted;
+    });
+ 
+    
+    phoneInput.addEventListener('input', function () {
+      let value = phoneInput.value.replace(/\D/g, '');
+      if (!value.startsWith("91")) {
+        value = "91" + value.replace(/^91/, "");
+      }
+      value = value.substring(0, 12);
+      if (value.length > 2) {
+        let numberPart = value.substring(2);
+        if (numberPart.length > 5) {
+          phoneInput.value = "+91 " + numberPart.substring(0, 5) + " " + numberPart.substring(5);
+        } else {
+          phoneInput.value = "+91 " + numberPart;
+        }
+      } else {
+        phoneInput.value = "+91 ";
+      }
+    });
+ 
+    // ✅ Validation + Summary
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      ulElement.innerHTML = "";
+      ele.innerHTML = "";
+      summaryBox.innerHTML = "";
+ 
+      let valid = true;
+      let messages = [];
+ 
+      const allInputs = form.querySelectorAll('input, select, textarea');
+      allInputs.forEach(elem => elem.classList.remove('border-red-500'));
+ 
+      // ✅ Required check
+      const inputs = form.querySelectorAll('input:not([type="file"]):not([type="button"]):not([type="submit"]):not([type="reset"])');
+      inputs.forEach(input => {
+        if (input.type === 'radio') {
+          if (!form.querySelector(`input[name="${input.name}"]:checked`)) {
+            valid = false;
+            messages.push("Gender is required.");
+          }
+        } else if (input.type === 'checkbox') {
+          if (input.name === 'skills' && !form.querySelector('input[name="skills"]:checked')) {
+            valid = false;
+            messages.push("At least one skill is required.");
+          }
+        } else if (!input.value.trim()) {
+          valid = false;
+          messages.push(`${input.name.charAt(0).toUpperCase() + input.name.slice(1)} is required.`);
+        }
+      });
+ 
+      // ✅ Name validation
+      const name = document.getElementById("text");
+      if (name.value.trim()) {
+        if (name.value.length < 3 || name.value.length > 10) {
+          name.classList.add("border-red-500");
+          messages.push("Name must be 3–10 characters.");
+          valid = false;
+        }
+      }
+ 
+      // ✅ Email validation
+      const email = document.getElementById("email");
+      if (email.value.trim()) {
+        const simpleEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!simpleEmailRegex.test(email.value)) {
+          messages.push("Enter a valid email address.");
+          valid = false;
+        }
+      }
+ 
+      // ✅ Telephone validation
+      const telValue = telInput.value;
+      const telDigits = telValue.replace(/\D/g, '');
+      const telFormatRegex = /^\d{3}-\d{3}-\d{4}$/;
+      if (telDigits.length !== 10 || !telFormatRegex.test(telValue)) {
+        messages.push("Telephone must be in format 242-299-3333.");
+        valid = false;
+      }
+ 
+      // ✅ Phone validation
+      const phoneValue = phoneInput.value.trim();
+      const phoneRegex = /^\+91\s\d{5}\s\d{5}$/;
+      if (!phoneRegex.test(phoneValue)) {
+        messages.push("Phone number must be in format +91 98765 43210.");
+        valid = false;
+      }
+ 
+      // ✅ Country
+      const select = form.querySelector('select');
+      if (!select.value) {
+        messages.push("Country is required.");
+        valid = false;
+      }
+ 
+      // ✅ Address
+      const textarea = document.getElementById("address");
+      if (!textarea.value.trim()) {
+        messages.push("Address is required.");
+        valid = false;
+      }
+ 
+      if (!valid) {
+        messages.forEach(msg => {
+          const liElement = document.createElement("li");
+          liElement.textContent = msg;
+          ulElement.appendChild(liElement);
+        });
+        ele.textContent = "Please fix the errors above.";
+        ele.classList.add("text-red-600", "font-semibold", "mt-2");
+      } else {
+        // ✅ Collect values
+        let selectedGender = form.querySelector('input[name="gender"]:checked')?.value || "";
+        let selectedSkills = [...form.querySelectorAll('input[name="skills"]:checked')].map(s => s.value).join(", ");
+ 
+        // ✅ File input
+        let fileInput = document.getElementById("file");
+        let fileName = fileInput.files.length > 0 ? fileInput.files[0].name : "No file selected";
+ 
+        summaryBox.innerHTML = `
+          <div class="p-4 border-2 border-green-500 rounded-lg bg-green-50 shadow">
+            <h2 class="text-xl font-bold text-green-600 mb-2">Form Summary</h2>
+            <p><b>Name:</b> ${name.value}</p>
+            <p><b>Email:</b> ${email.value}</p>
+            <p><b>Phone Number:</b> ${phoneValue}</p>
+            <p><b>Telephone:</b> ${telValue}</p>
+            <p><b>URL:</b> ${document.getElementById("url").value}</p>
+            <p><b>Search:</b> ${document.getElementById("search").value}</p>
+            <p><b>DOB:</b> ${document.getElementById("date").value}</p>
+            <p><b>Time:</b> ${document.getElementById("time").value}</p>
+            <p><b>Datetime Local:</b> ${document.getElementById("datetime-local").value}</p>
+            <p><b>Month:</b> ${document.getElementById("month").value}</p>
+            <p><b>Week:</b> ${document.getElementById("week").value}</p>
+            <p><b>Color:</b> ${document.getElementById("color").value}</p>
+            <p><b>File:</b> ${fileName}</p>
+            <p><b>Gender:</b> ${selectedGender}</p>
+            <p><b>Skills:</b> ${selectedSkills}</p>
+            <p><b>Country:</b> ${select.value}</p>
+            <p><b>Address:</b> ${textarea.value}</p>
+          </div>
+        `;
+      }
+    });
+  });
+  </script>
+</head>
+ 
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
+    <h1 class="text-2xl font-bold text-center text-blue-600 mb-6">Sample HTML Form</h1>
+   
+    <form novalidate class="space-y-4">
+      <!-- Name -->
+      <div>
+        <label class="block font-medium">Name:</label>
+        <input type="text" id="text" name="name" placeholder="Scrooge McDuck"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- Email -->
+      <div>
+        <label class="block font-medium">Email:</label>
+        <input type="text" id="email" name="email" placeholder="john@example.com"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- Phone -->
+      <div>
+        <label class="block font-medium">Phone Number:</label>
+        <input type="text" id="number" name="number"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- Telephone -->
+      <div>
+        <label class="block font-medium">Telephone:</label>
+        <input type="tel" id="tel" name="tel" placeholder="123-456-7890"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- URL -->
+      <div>
+        <label class="block font-medium">URL:</label>
+        <input type="url" id="url" name="url" placeholder="https://example.com"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- Search -->
+      <div>
+        <label class="block font-medium">Search:</label>
+        <input type="search" id="search" name="search" placeholder="Sample search"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- DOB -->
+      <div>
+        <label class="block font-medium">DOB:</label>
+        <input type="date" id="date" name="date"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- Time -->
+      <div>
+        <label class="block font-medium">Time:</label>
+        <input type="time" id="time" name="time"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- Datetime -->
+      <div>
+        <label class="block font-medium">Datetime Local:</label>
+        <input type="datetime-local" id="datetime-local" name="datetime-local"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- Month -->
+      <div>
+        <label class="block font-medium">Month:</label>
+        <input type="month" id="month" name="month"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- Week -->
+      <div>
+        <label class="block font-medium">Week:</label>
+        <input type="week" id="week" name="week"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- Color -->
+      <div>
+        <label class="block font-medium">Color:</label>
+        <input type="color" id="color" name="color"
+          class="w-16 h-10 border border-gray-300 rounded-lg p-1 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- File -->
+      <div>
+        <label class="block font-medium">File:</label>
+        <input type="file" id="file" name="file"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+      </div>
+ 
+      <!-- Gender -->
+      <div>
+        <label class="block font-medium">Gender:</label>
+        <div class="space-x-4">
+          <label><input type="radio" name="gender" value="Male"> Male</label>
+          <label><input type="radio" name="gender" value="Female"> Female</label>
+          <label><input type="radio" name="gender" value="Other"> Other</label>
+        </div>
+      </div>
+ 
+      <!-- Skills -->
+      <div>
+        <label class="block font-medium">Skills:</label>
+        <div class="space-x-4">
+          <label><input type="checkbox" name="skills" value="HTML"> HTML</label>
+          <label><input type="checkbox" name="skills" value="CSS"> CSS</label>
+          <label><input type="checkbox" name="skills" value="JS"> JS</label>
+        </div>
+      </div>
+ 
+      <!-- Country -->
+      <div>
+        <label class="block font-medium">Country:</label>
+        <select id="select" name="select"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none">
+          <option value="">-- Select Country --</option>
+          <option value="India">India</option>
+          <option value="Bangladesh">Bangladesh</option>
+          <option value="Nepal">Nepal</option>
+          <option value="Bhutan">Bhutan</option>
+          <option value="Sri Lanka">Sri Lanka</option>
+          <option value="Myanmar">Myanmar</option>
+          <option value="China">China</option>
+        </select>
+      </div>
+ 
+      <!-- Address -->
+      <div>
+        <label class="block font-medium">Address:</label>
+        <textarea id="address" name="address" rows="4" cols="30"
+          class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"></textarea>
+      </div>
+ 
+      <!-- Buttons -->
+      <div class="flex space-x-4">
+        <input type="submit" value="Submit"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer">
+        <input type="reset" value="Reset"
+          class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 cursor-pointer">
+      </div>
+    </form>
+ 
+    <!-- Error messages -->
+    <div class="mt-4">
+      <ul id="list" class="list-disc text-red-500 pl-5"></ul>
+      <div id="ele"></div>
+    </div>
+ 
+    <!-- ✅ Summary Box -->
+    <div id="summary" class="mt-6"></div>
+  </div>
+</body>
+</html>
+ 
