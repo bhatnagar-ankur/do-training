@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GitHub </title>
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    section { margin: 15px 0; padding: 10px; border: 1px solid #aaa; }
+    input, textarea { display:block; margin:5px 0; padding:5px; width:250px; }
+    button { padding:5px 10px; margin-top:5px; }
+    pre { background:#eee; padding:8px; }
+  </style>
+</head>
+<body>
+<h2>GitHub API </h2>
+
+<section>
+  <h3>Auth</h3>
+  <input id="token" type="password" placeholder="GitHub Token (needed for POST)">
+</section>
+
+<section>
+  <h3>User Profile</h3>
+  <input id="username" placeholder="username">
+  <button onclick="getUser()">Fetch Profile</button>
+  <pre id="out1"></pre>
+</section>
+
+<section>
+  <h3>User Repos</h3>
+  <input id="reposUser" placeholder="username">
+  <button onclick="getRepos()">Fetch Repos</button>
+  <pre id="out2"></pre>
+</section>
+
+<section>
+  <h3>Repo Issues</h3>
+  <input id="owner" placeholder="owner">
+  <input id="repo" placeholder="repo">
+  <button onclick="getIssues()">Fetch Issues</button>
+  <pre id="out3"></pre>
+</section>
+
+<section>
+  <h3>Create Issue</h3>
+  <input id="issueOwner" placeholder="owner">
+  <input id="issueRepo" placeholder="repo">
+  <input id="issueTitle" placeholder="title">
+  <textarea id="issueBody" placeholder="body"></textarea>
+  <button onclick="createIssue()">Create Issue</button>
+  <pre id="out4"></pre>
+</section>
+
+<section>
+  <h3>Create Gist</h3>
+  <input id="gistDesc" placeholder="description">
+  <textarea id="gistContent" placeholder="content"></textarea>
+  <button onclick="createGist()">Create Gist</button>
+  <pre id="out5"></pre>
+</section>
+
+<script>
+// Get User Profile
+function getUser(){
+  let username = document.getElementById("username").value;
+  fetch("https://api.github.com/users/" + username)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("out1").textContent = JSON.stringify(data, null, 2);
+    });
+}
+
+// Get User Repos
+function getRepos(){
+  let user = document.getElementById("reposUser").value;
+  fetch("https://api.github.com/users/" + user + "/repos")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("out2").textContent = JSON.stringify(data, null, 2);
+    });
+}
+
+// Get Issues
+function getIssues(){
+  let owner = document.getElementById("owner").value;
+  let repo = document.getElementById("repo").value;
+  fetch("https://api.github.com/repos/" + owner + "/" + repo + "/issues")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("out3").textContent = JSON.stringify(data, null, 2);
+    });
+}
+
+// Create Issue (needs token)
+function createIssue(){
+  let token = document.getElementById("token").value;
+  let owner = document.getElementById("issueOwner").value;
+  let repo = document.getElementById("issueRepo").value;
+  let title = document.getElementById("issueTitle").value;
+  let body = document.getElementById("issueBody").value;
+
+  fetch("https://api.github.com/repos/" + owner + "/" + repo + "/issues", {
+    method: "POST",
+    headers: {
+      "Authorization": "token " + token,
+      "Accept": "application/vnd.github+json"
+    },
+    body: JSON.stringify({ title: title, body: body })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("out4").textContent = JSON.stringify(data, null, 2);
+  });
+}
+
+// Create Gist (needs token)
+function createGist(){
+  let token = document.getElementById("token").value;
+  let desc = document.getElementById("gistDesc").value;
+  let content = document.getElementById("gistContent").value;
+
+  fetch("https://api.github.com/gists", {
+    method: "POST",
+    headers: {
+      "Authorization": "token " + token,
+      "Accept": "application/vnd.github+json"
+    },
+    body: JSON.stringify({
+      description: desc,
+      public: true,
+      files: {
+        "file1.txt": { content: content }
+      }
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("out5").textContent = JSON.stringify(data, null, 2);
+  });
+}
+</script>
+</body>
+</html>
