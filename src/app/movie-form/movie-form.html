@@ -1,0 +1,40 @@
+<div class="movie-form">
+    <h1>MOVIES</h1>
+    <form>
+        <div>
+            <label>Title:</label><br>
+            <input type="text" id="title" name="title" [(ngModel)]="title"><br><br>
+        </div>
+        <div>
+            <label>Description:</label><br>
+            <input type="text" id="description" name="description" [(ngModel)]="description"><br><br>
+        </div>
+        <div>
+            <label>Date:</label><br>
+            <input type="date" id="date" name="date" [(ngModel)]="date"><br><br>
+        </div>
+        <div class="genre">
+            <label>Genre:</label>
+            <select id="genre" name="genre" [(ngModel)]="genre">
+                <option value="Action">Action</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Drama">Drama</option>
+            </select>
+        </div>
+        <div>
+            <label>Rating:</label><br>
+            <input type="number" id="rating" name="rating" [(ngModel)]="rating"><br><br>
+        </div>
+        <div>
+            <label>Language:</label><br>
+            <input type="text" id="language" name="language" [(ngModel)]="language"><br><br>
+        </div>
+        @if(movie?.id) {
+            <button type="button" (click)="updateMovies()">EDIT</button>
+        }@else{
+            <button type="button" (click)="addMovies()">ADD</button>
+        }
+    </form>
+
+
+</div>

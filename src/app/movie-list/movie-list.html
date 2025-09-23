@@ -1,0 +1,7 @@
+<app-movie-form (movieAdded)="onGetMovies($event)" [Movie]></app-movie-form>
+<div class="movie-cards">
+    @for(movie of movieList; track $index) {
+        <app-movie-profile [movie]="movie" (delete)="onDelete($event)" (click)="onSelectMovie(movie)"></app-movie-profile>
+    }
+</div>
+<app-movie-details [movie]="selectedMovie"></app-movie-details>

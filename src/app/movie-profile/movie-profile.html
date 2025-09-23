@@ -1,0 +1,22 @@
+<section class="card-wrapper">
+    <div class="profile-card">
+        <div class="top">
+            <div class="left">
+                <span>{{movie.id}}</span>
+                <span>{{movie.title}}</span>
+                <span>{{movie.description}}</span>
+                <span>{{movie.date}}</span>
+                <span>{{movie.genre}}</span>
+                <span>{{movie.rating}}</span>
+                <span>{{movie.language}}</span>
+            </div>
+            <div class="right">
+                <img [src]="movie.imgUrl" alt="{{movie.title}}">
+            </div>
+        </div>
+        <div class="footer">
+            <button type="button" (click)="onEditMovie()">Edit</button>
+            <button type="button" (click)="onDeleteMovie()">Delete</button>
+        </div>
+    </div>
+</section>
