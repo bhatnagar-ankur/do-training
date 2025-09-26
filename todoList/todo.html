@@ -149,7 +149,6 @@
             const draggedId = event.dataTransfer.getData("text/plain");
             const draggedElement = document.getElementById(draggedId);
 
-            // Walk up the DOM to find the correct drop target
             let dropZone = event.target;
             while (dropZone && !dropZone.matches("#listItems, #completedTasks")) {
                 dropZone = dropZone.parentElement;
@@ -162,5 +161,6 @@
     </script>
 
 </body>
+
 
 </html>
